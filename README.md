@@ -21,6 +21,6 @@ see requests example in the wiki / voir les exemples de requêtes dans le wiki
 Please be patient with the client as both client and server are proof of concept style, no production mode intended on those.
 Soyez patient avec le client car à la fois client et serveur sotn des déploiement en mode preuve de concept. Ils ne sont pas des déploiements de production
 
-sensorthings.brgm-rec.fr/SensorThingsGroundWaterViewer/map.html
+http://sensorthings.brgm-rec.fr/SensorThingsGroundWaterViewer/map.html
 
 http://sensorthings.brgm-rec.fr/SensorThingsFloodViewer/map.html
