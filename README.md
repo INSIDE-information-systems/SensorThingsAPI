@@ -16,6 +16,7 @@ http://sensorthings.brgm-rec.fr/SensorThingsFlood/v1.0
 
 # requêtage des API
 see requests example in the wiki / voir les exemples de requêtes dans le wiki
+https://github.com/INSIDE-information-systems/SensorThingsAPI/wiki
 
 # Client
 Please be patient with the client as both client and server are proof of concept style, no production mode intended on those.
