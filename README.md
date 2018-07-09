@@ -9,12 +9,15 @@ It was deployed on snapshots of two timeseries oriented databases / déploiement
 A light weight web client started during a hackathon (DanubeHack) was configured in a ProofOfConcept style to access SensoThings API endpoints
 Un client web léger créé dans le cadre d'un hackathon (DanubeHack) a été configuré pour en mode preuve de concept pour accéder au endpoints SensorThings API déployés
 
-# endPoint
+# API
 http://sensorthings.brgm-rec.fr/SensorThingsGroundWater/
 
 http://sensorthings.brgm-rec.fr/SensorThingsFlood/
 
-# client
+# requêtage des API
+see requests example in the wiki / voir les exemples de requêtes dans le wiki
+
+# Client
 Please be patient with the client as both client and server are proof of concept style, no production mode intended on those.
 Soyez patient avec le client car à la fois client et serveur sotn des déploiement en mode preuve de concept. Ils ne sont pas des déploiements de production
 
