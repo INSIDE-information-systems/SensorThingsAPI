@@ -10,9 +10,9 @@ A light weight web client started during a hackathon (DanubeHack) was configured
 Un client web léger créé dans le cadre d'un hackathon (DanubeHack) a été configuré pour en mode preuve de concept pour accéder au endpoints SensorThings API déployés
 
 # API
-http://sensorthings.brgm-rec.fr/SensorThingsGroundWater/
+http://sensorthings.brgm-rec.fr/SensorThingsGroundWater/v1.0
 
-http://sensorthings.brgm-rec.fr/SensorThingsFlood/
+http://sensorthings.brgm-rec.fr/SensorThingsFlood/v1.0
 
 # requêtage des API
 see requests example in the wiki / voir les exemples de requêtes dans le wiki
@@ -22,5 +22,10 @@ Please be patient with the client as both client and server are proof of concept
 Soyez patient avec le client car à la fois client et serveur sotn des déploiement en mode preuve de concept. Ils ne sont pas des déploiements de production
 
 http://sensorthings.brgm-rec.fr/SensorThingsGroundWaterViewer/map.html
-
 http://sensorthings.brgm-rec.fr/SensorThingsFloodViewer/map.html
+
+Both clients follow the same rationale / les clients utilisent la même logique
+- Locations
+- Things
+- Datastreams
+- Observations
