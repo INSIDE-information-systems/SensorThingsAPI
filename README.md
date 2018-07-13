@@ -24,6 +24,7 @@ Please be patient with the client as both client and server are proof of concept
 Soyez patient avec le client car à la fois client et serveur sotn des déploiement en mode preuve de concept. Ils ne sont pas des déploiements de production
 
 http://sensorthings.brgm-rec.fr/SensorThingsGroundWaterViewer/map.html
+
 http://sensorthings.brgm-rec.fr/SensorThingsFloodViewer/map.html
 
 Both clients follow the same rationale / les clients utilisent la même logique
