@@ -15,3 +15,12 @@ Based on these as required, materialized views were created for the basic FROST 
 - SENSORS
 - THINGS
 - THINGS_LOCATIONS
+
+In addition, several pl/sql functions were created for the creation of the JSON structures required under the properties attribute:
+- obs_prop: JSON properties for OBSERVSTIONS
+- thg_prop: JSON properties for THINGS
+- sta_nets: JSON object containing the list of networks for a station (THINGS)
+- clean_str: filter to remove tabs and " characters that cause issues with the JSON encoding
+
+
+
