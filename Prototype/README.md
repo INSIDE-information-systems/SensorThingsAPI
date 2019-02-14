@@ -1,5 +1,5 @@
 # Intro
-Implementation of OGC SensorThing API for Environmental Data / Implementation du standard OGC SensorThings API pour les données environnementales
+Prototype implementation of OGC SensorThing API for Environmental Data / Implementation du standard OGC SensorThings API pour les données environnementales
 OGC SensorThings API Part 1: Sensing is implemented (OGC 15-078r6) : http://www.opengeospatial.org/standards/sensorthings
 
 It was deployed on snapshots of two timeseries oriented databases / déploiement sur deux photos de bases du SIE
