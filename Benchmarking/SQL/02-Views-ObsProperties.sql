@@ -18,5 +18,5 @@ WITH DATA;
 CREATE UNIQUE INDEX mv_pk_obsprop
   ON sta."OBS_PROPERTIES"
   USING btree
-  ("ID" COLLATE pg_catalog."default");
+  ("ID");
 

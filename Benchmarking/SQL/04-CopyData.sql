@@ -34,9 +34,8 @@ insert into sensorthings."THINGS_LOCATIONS"
 ---------------
 
 insert into sensorthings."SENSORS"
-	select ids.nr_id, "DESCRIPTION", "ENCODING_TYPE", "METADATA", "NAME", "PROPERTIES"
-    from sta."SENSORS" mt
-    inner join sta.sensor_ids as ids on mt."ID" = ids.str_id;
+	select "ID", "DESCRIPTION", "ENCODING_TYPE", "METADATA", "NAME", "PROPERTIES"
+    from sta."SENSORS" mt;
 
 
 -----------------
@@ -44,9 +43,8 @@ insert into sensorthings."SENSORS"
 -----------------
 
 insert into sensorthings."OBS_PROPERTIES"
-	select ids.nr_id, "NAME", "DEFINITION", "DESCRIPTION", "PROPERTIES"
-    from sta."OBS_PROPERTIES" mt
-    inner join sta.obsprop_ids as ids on mt."ID" = ids.str_id;
+	select "ID", "NAME", "DEFINITION", "DESCRIPTION", "PROPERTIES"
+    from sta."OBS_PROPERTIES" mt;
 
 
 -------------------
@@ -74,8 +72,8 @@ insert into sensorthings."DATASTREAMS" (
 		"OBSERVATION_TYPE",
 		"PHENOMENON_TIME_START"::timestamptz,
 		"PHENOMENON_TIME_END"::timestamptz,
-		sids.nr_id, -- "SENSOR_ID"
-		opids.nr_id, -- "OBS_PROPERTY_ID",
+		"SENSOR_ID",
+		"OBS_PROPERTY_ID",
 		tids.nr_id, -- "THING_ID",
 		"UNIT_NAME",
 		"UNIT_SYMBOL",
@@ -85,9 +83,7 @@ insert into sensorthings."DATASTREAMS" (
 		"PROPERTIES"
     from sta."DATASTREAMS" mt
     inner join sta.datastream_ids as ids on mt."ID" = ids.str_id
-    inner join sta.thing_ids as tids on mt."THING_ID" = tids.str_id
-    inner join sta.sensor_ids as sids on mt."SENSOR_ID" = sids.str_id
-    inner join sta.obsprop_ids as opids on mt."OBS_PROPERTY_ID" = opids.str_id;
+    inner join sta.thing_ids as tids on mt."THING_ID" = tids.str_id;
 
 
 
