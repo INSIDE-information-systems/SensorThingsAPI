@@ -3,7 +3,7 @@
 DROP MATERIALIZED VIEW sta."OBS_PROPERTIES";
 
 CREATE MATERIALIZED VIEW sta."OBS_PROPERTIES" AS 
- SELECT parametre.code AS "ID",
+ SELECT parametre.code::bigint AS "ID",
     parametre.libellelong AS "NAME",
     parametre.libellelong AS "DEFINITION",
     parametre.libellelong AS "DESCRIPTION",
