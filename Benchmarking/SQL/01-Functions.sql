@@ -1,4 +1,38 @@
 ---------------------
+--- sta.ds_prop ---
+---------------------
+
+CREATE OR REPLACE FUNCTION sta.ds_prop(cdsupport text, supportnom text, cdfractionanalysee text, fraction_analyseenom text)
+ RETURNS text
+ LANGUAGE plpgsql
+AS $function$
+	DECLARE	
+		outstr text;
+	BEGIN
+		outstr = '{';
+		IF ((NOT cdsupport ISNULL) OR (NOT supportnom ISNULL)) 
+			THEN 
+				outstr = outstr || '"medium": {';
+				IF (NOT cdsupport ISNULL) THEN outstr = outstr || '"code": "' || cdsupport || '"'; END IF;
+				IF ((NOT cdsupport ISNULL) AND (NOT supportnom ISNULL)) THEN outstr = outstr || ','; END IF;
+				IF (NOT supportnom ISNULL) THEN outstr = outstr || '"label": "' || supportnom || '"'; END IF;
+				outstr = outstr || '},'; 
+		END IF;
+		IF ((NOT cdfractionanalysee ISNULL) OR (NOT fraction_analyseenom ISNULL)) 
+			THEN 
+				outstr = outstr || '"fraction": {';
+				IF (NOT cdfractionanalysee ISNULL) THEN outstr = outstr || '"code": "' || cdfractionanalysee || '"'; END IF;
+				IF ((NOT cdfractionanalysee ISNULL) AND (NOT fraction_analyseenom ISNULL)) THEN outstr = outstr || ','; END IF;
+				IF (NOT fraction_analyseenom ISNULL) THEN outstr = outstr || '"label": "' || fraction_analyseenom || '"'; END IF;
+				outstr = outstr || '},'; 
+		END IF;
+		outstr = rtrim(outstr, ',') || '}';
+		RETURN outstr;
+	END
+$function$
+;
+
+---------------------
 --- sta.clean_str ---
 ---------------------
 
