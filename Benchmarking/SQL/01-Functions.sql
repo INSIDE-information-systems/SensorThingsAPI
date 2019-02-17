@@ -283,8 +283,6 @@ BEGIN
 							IF (NOT libellebassin ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libellebassin) || '"'; END IF;
 							outstr = outstr || '},';
 						END IF;						
-									
-						*****************************************
 						
 						IF ((NOT codecommune ISNULL) OR (NOT libellecommune ISNULL)) 
 							THEN 
