@@ -18,6 +18,6 @@ CREATE MATERIALIZED VIEW sta."SENSORS" AS
 -- DROP INDEX sta.mv_pk_sensor;
 
 CREATE UNIQUE INDEX mv_pk_sensor
-  ON sta."SENSORS"("ID");
+  ON sta."SENSORS"("ID"); 
 
 
