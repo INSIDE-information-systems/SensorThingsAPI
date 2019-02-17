@@ -17,15 +17,19 @@ Based on these as required, materialized views were created for the basic FROST 
   - id: lpad(pc.cdunitemesure, 5, '0') || lpad(pc.cdfractionanalysee, 3, '0') || lpad(pc.cdsupport, 3, '0') || 
 			lpad(pc.cdparametre, 5, '0') || lpad(pc.cdmethana, 5, '0') || lpad(pc.cdstationmesureeauxsurface, 8, '0')
 - FEATURES: 02-Views-Features.sql
+  - id: still checking if need to add cdstationmesureeauxsurface to cdprelevement
 - LOCATIONS: 02-Views-Locations.sql
+  - id: pc.cdstationmesureeauxsurface
 - OBS_PROPERTIES: 02-Views-ObsProperties.sql
   - id: pc.cdparametre
 - OBSERVATIONS: 02-Views-Observations.sql
+  - id: pc.id
 - SENSORS: 02-Views-Sensors.sql
   - id: pc.cdmethana
 - THINGS: 02-Views-Things.sql
   - id: pc.cdstationmesureeauxsurface
 - THINGS_LOCATIONS: 02-Views-ThingsLocations.sql
+  - id: pc.cdstationmesureeauxsurface
 
 Based on these materialized views, new numeric ids are generated from the string ids (03-Views-IdGeneration.sql):
 - sta.location_ids
