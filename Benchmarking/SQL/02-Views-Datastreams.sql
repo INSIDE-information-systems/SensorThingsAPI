@@ -5,7 +5,7 @@ DROP MATERIALIZED VIEW sta."DATASTREAMS";
 CREATE MATERIALIZED VIEW sta."DATASTREAMS" AS 
  SELECT lpad(base.cdunitemesure, 5, '0') || lpad(base.cdfractionanalysee, 3, '0') || lpad(base.cdsupport, 3, '0') || 
 			lpad(base.cdparametre, 5, '0') || lpad(base.cdmethana, 5, '0') || lpad(base.cdstationmesureeauxsurface, 8, '0') AS "ID",
-    par.libellelong || ' in ' || support.nom || ' on ' || fraction_analysee.nom || ' at ' || sta.libellestation || ' with method ' || mana.nom AS "DESCRIPTION",
+    sta.clean(par.libellelong) || ' in ' || sta.clean(support.nom) || ' on ' || sta.clean(fraction_analysee.nom) || ' at ' || sta.clean(sta.libellestation) || ' with method ' || sta.clean(mana.nom) AS "DESCRIPTION",
     'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement' AS "OBSERVATION_TYPE",
     (base.mindateprel || ' ') || base.minheureprel AS "PHENOMENON_TIME_START",
     (base.maxdateprel || ' ') || base.maxheureprel AS "PHENOMENON_TIME_END",
@@ -15,7 +15,7 @@ CREATE MATERIALIZED VIEW sta."DATASTREAMS" AS
     unite.symbole AS "UNIT_NAME",
     unite.symbole AS "UNIT_SYMBOL",
     'http://id.eaufrance.fr/urf/' || base.cdunitemesure AS "UNIT_DEFINITION",
-    par.libellelong || ' in ' || support.nom || ' on ' || fraction_analysee.nom || ' at ' || sta.libellestation || ' with method ' || mana.nom AS "NAME",
+    sta.clean(par.libellelong) || ' in ' || sta.clean(support.nom) || ' on ' || sta.clean(fraction_analysee.nom) || ' at ' || sta.clean(sta.libellestation) || ' with method ' || sta.clean(mana.nom) AS "NAME",
     st_geomfromtext('POINT(' || sta.latitude || ' ' || sta.longitude || ')') AS "OBSERVED_AREA",
     sta.ds_prop(base.cdsupport, support.nom, base.cdfractionanalysee, fraction_analysee.nom) AS "PROPERTIES"
    FROM sta.dsbase base
