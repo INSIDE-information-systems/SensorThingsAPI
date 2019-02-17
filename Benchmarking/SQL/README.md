@@ -12,7 +12,7 @@ In addition, several pl/sql functions were created for the creation of the JSON 
 - sta_nets: JSON object containing the list of networks for a station (THINGS)
 - clean_str: filter to remove tabs and " characters that cause issues with the JSON encoding
 
-Based on these as required, materialized views were created for the basic FROST database tables, whereby string ids where utilized:
+Based on these as required, materialized views were created for the basic FROST database tables, whereby string ids where utilized for all tables other than SENSORS and OBS_PROPERTIES (bigint):
 - DATASTREAMS: 02-Views-Datastreams.sql
   - id: lpad(pc.cdunitemesure, 5, '0') || lpad(pc.cdfractionanalysee, 3, '0') || lpad(pc.cdsupport, 3, '0') || 
 			lpad(pc.cdparametre, 5, '0') || lpad(pc.cdmethana, 5, '0') || lpad(pc.cdstationmesureeauxsurface, 8, '0')
