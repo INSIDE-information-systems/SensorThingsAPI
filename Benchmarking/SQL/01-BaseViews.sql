@@ -1,4 +1,5 @@
 -- base view for the creation of DATASTREAMS
+DROP MATERIALIZED VIEW sta.dsbase cascade;
 
 CREATE MATERIALIZED VIEW sta.dsbase
 AS SELECT pc.cdstationmesureeauxsurface,
@@ -7,7 +8,6 @@ AS SELECT pc.cdstationmesureeauxsurface,
     pc.cdsupport,
     pc.cdfractionanalysee,
     pc.cdunitemesure,
-    pc.insituana,
     min(pc.dateprel) AS mindateprel,
     max(pc.dateprel) AS maxdateprel,
     min(pc.heureprel) AS minheureprel,
@@ -17,9 +17,10 @@ AS SELECT pc.cdstationmesureeauxsurface,
     min(pc.heureana) AS minheureana,
     max(pc.heureana) AS maxheureana
    FROM physicochimie.analyse_physicochimie pc
-  GROUP BY pc.cdstationmesureeauxsurface, pc.cdmethana, pc.cdparametre, pc.cdsupport, pc.cdfractionanalysee, pc.cdunitemesure, pc.insituana;
+  GROUP BY pc.cdstationmesureeauxsurface, pc.cdmethana, pc.cdparametre, pc.cdsupport, pc.cdfractionanalysee, pc.cdunitemesure;
 
 -- base view for the creation of FEATURES
+DROP MATERIALIZED VIEW sta.sampbase cascade;
 
 CREATE MATERIALIZED VIEW sta.sampbase
 AS SELECT pc.cdprelevement,
@@ -43,14 +44,15 @@ AS SELECT pc.cdprelevement,
   GROUP BY pc.cdprelevement, pc.preleveur, pc.finaliteprel, pc.dateprel, pc.heureprel, pc.datefinprel, pc.heurefinprel, pc.cdstationmesureeauxsurface;
 
 -- base view for the creation of SENSORS
+DROP MATERIALIZED VIEW sta.senbase cascade;
 
 CREATE MATERIALIZED VIEW sta.senbase
-AS SELECT analyse_physicochimie.cdmethana,
-    analyse_physicochimie.insituana
+AS SELECT analyse_physicochimie.cdmethana
    FROM physicochimie.analyse_physicochimie
-  GROUP BY analyse_physicochimie.cdmethana, analyse_physicochimie.insituana;
+  GROUP BY analyse_physicochimie.cdmethana;
 
 -- base view for linking multiple networks to a station (THINGS)
+DROP MATERIALIZED VIEW sta.sta_net cascade;
 
 CREATE MATERIALIZED VIEW sta.sta_net
 AS SELECT stat.cdstationmesureeauxsurface,
