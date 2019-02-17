@@ -37,18 +37,14 @@ $function$
 --- sta.clean_str ---
 ---------------------
 
-CREATE OR REPLACE FUNCTION sta.clean_str(str text)
+CREATE OR REPLACE FUNCTION sta.clean(str text)
  RETURNS text
  LANGUAGE plpgsql
 AS $function$
-
-DECLARE	
 begin
-
+	IF (str ISNULL) THEN return ''; END IF;
 	return regexp_replace(regexp_replace(str, '"', '','g'), '\t', '','g');
-
 END
-
 $function$
 ;
 
