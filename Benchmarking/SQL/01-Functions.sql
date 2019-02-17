@@ -218,41 +218,7 @@ BEGIN
 				THEN outstr = outstr || ', "endTime": "' || datemisehorsservice || '"';
 			END IF;
 
-			IF ((NOT codecommune ISNULL) OR (NOT libellecommune ISNULL)) 
-				THEN 
-					outstr = outstr || ', "commune": {';
-					IF (NOT codecommune ISNULL) THEN outstr = outstr || '"code": "' || codecommune || '"'; END IF;
-					IF ((NOT codecommune ISNULL) AND (NOT libellecommune ISNULL)) THEN outstr = outstr || ','; END IF;
-					IF (NOT libellecommune ISNULL) THEN outstr = outstr || '"label": "' || libellecommune || '"'; END IF;
-					outstr = outstr || '}';
-			END IF;
 
-			IF ((NOT codedepartement ISNULL) OR (NOT libelledepartement ISNULL)) 
-				THEN 
-					outstr = outstr || ', "departement": {';
-					IF (NOT codedepartement ISNULL) THEN outstr = outstr || '"code": "' || codedepartement || '"'; END IF;
-					IF ((NOT codedepartement ISNULL) AND (NOT libelledepartement ISNULL)) THEN outstr = outstr || ','; END IF;
-					IF (NOT libelledepartement ISNULL) THEN outstr = outstr || '"label": "' || libelledepartement || '"'; END IF;
-					outstr = outstr || '}';
-			END IF;
-	
-			IF ((NOT coderegion ISNULL) OR (NOT libelleregion ISNULL)) 
-				THEN 
-					outstr = outstr || ', "region": {';
-					IF (NOT coderegion ISNULL) THEN outstr = outstr || '"code": "' || coderegion || '"'; END IF;
-					IF ((NOT coderegion ISNULL) AND (NOT libelleregion ISNULL)) THEN outstr = outstr || ','; END IF;
-					IF (NOT libelleregion ISNULL) THEN outstr = outstr || '"label": "' || libelleregion || '"'; END IF;
-					outstr = outstr || '}';
-			END IF;
-
-			IF ((NOT codecourseau ISNULL) OR (NOT libellecourseau ISNULL)) 
-				THEN 
-					outstr = outstr || ', "courseau": {';
-					IF (NOT codecourseau ISNULL) THEN outstr = outstr || '"code": "' || codecourseau || '"'; END IF;
-					IF ((NOT codecourseau ISNULL) AND (NOT libellecourseau ISNULL)) THEN outstr = outstr || ','; END IF;
-					IF (NOT libellecourseau ISNULL) THEN outstr = outstr || '"label": "' || libellecourseau || '"'; END IF;
-					outstr = outstr || '}';
-			END IF;
 
 			IF ((NOT altitude ISNULL) OR (NOT pointkilometrique ISNULL)) 
 				THEN 
@@ -269,20 +235,102 @@ BEGIN
 					outstr = outstr || ', "network": ' || networks;
 			END IF;
 			
-			IF ((NOT codemasseeau ISNULL) OR (NOT codeeumasseeau ISNULL) OR (NOT libellemasseeau ISNULL) OR (NOT codesousbassin ISNULL) OR (NOT libellesousbassin ISNULL) OR (NOT codebassin ISNULL) OR (NOT codeeubassin ISNULL) OR (NOT libellebassin ISNULL)) 
+			-- codemasseeau: WFD:WaterBody (wfd waterbody code)
+			-- codesousbassin: WFD:RiverBasin (wfd sub-unit code)
+			-- codebassin: WFD:RiverBasin (wfd river basin district code)
+			-- codecommune: http://data.ign.fr/def/geofla#Commune
+			-- codedepartement: http://data.ign.fr/def/geofla#Departement
+			-- coderegion: http://data.ign.fr/def/geofla#Region
+			-- codecourseau: HY_Waterbody (river segment)
+
+			
+			
+			IF ((NOT codemasseeau ISNULL) OR (NOT codeeumasseeau ISNULL) OR (NOT libellemasseeau ISNULL) OR 
+				(NOT codesousbassin ISNULL) OR (NOT libellesousbassin ISNULL) OR 
+				(NOT codebassin ISNULL) OR (NOT codeeubassin ISNULL) OR (NOT libellebassin ISNULL)) OR
+				(NOT codecommune ISNULL) OR (NOT libellecommune ISNULL) OR
+				(NOT codedepartement ISNULL) OR (NOT libelledepartement ISNULL) OR
+				(NOT coderegion ISNULL) OR (NOT libelleregion ISNULL) OR
+				(NOT codecourseau ISNULL) OR (NOT libellecourseau ISNULL)
+ 
 				THEN 
-					outstr = outstr || ', "relatedFeature": [';
+					outstr = outstr || ', "related": [';
 					IF ((NOT codemasseeau ISNULL) OR (NOT codeeumasseeau ISNULL) OR (NOT libellemasseeau ISNULL))
 						THEN
 							outstr = outstr || '{';
-							IF (NOT codemasseeau ISNULL) THEN outstr = outstr || '"code": "' || codemasseeau || '"'; END IF;
-							IF ((NOT codemasseeau ISNULL) AND (NOT codeeumasseeau ISNULL)) THEN outstr = outstr || ','; END IF;
-							IF (NOT codeeumasseeau ISNULL) THEN outstr = outstr || '"EUcode": "' || codeeumasseeau || '"'; END IF;
-							IF (((NOT codemasseeau ISNULL) OR (NOT codeeumasseeau ISNULL)) AND (NOT libellemasseeau ISNULL)) THEN outstr = outstr || ','; END IF;
-							IF (NOT libellemasseeau ISNULL) THEN outstr = outstr || '"label": "' || libellemasseeau || '"'; END IF;
-							outstr = outstr || '}';
+							IF (NOT codemasseeau ISNULL) THEN outstr = outstr || '"@id": "http://id.eaufrance.fr/cea/' || codemasseeau || '",'; END IF;
+							IF ((NOT codemasseeau ISNULL) OR ((NOT codeeumasseeau ISNULL) OR (NOT libellemasseeau ISNULL))) THEN outstr = outstr || '"@type": "HY_Waterbody"'; END IF;
+							IF (NOT codeeumasseeau ISNULL) THEN outstr = outstr || ', "EUcode": "' || codeeumasseeau || '"'; END IF;
+							IF (NOT libellemasseeau ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libellemasseeau) || '"'; END IF;
+							outstr = outstr || '},';
 						END IF;			
-					outstr = outstr || ']';
+						
+					IF ((NOT codesousbassin ISNULL) OR (NOT libellesousbassin ISNULL))
+						THEN
+							outstr = outstr || '{';
+							IF (NOT codesousbassin ISNULL) THEN outstr = outstr || '"@id": "http://id.eaufrance.fr/cea/' || codesousbassin || '",'; END IF;
+							IF ((NOT codesousbassin ISNULL) OR ((NOT codeeumasseeau ISNULL) OR (NOT libellesousbassin ISNULL))) THEN outstr = outstr || '"@type": "WFD:RiverBasin"'; END IF;
+							IF (NOT libellesousbassin ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libellesousbassin) || '"'; END IF;
+							outstr = outstr || '},';
+						END IF;							
+
+					IF ((NOT codebassin ISNULL) OR (NOT codeeubassin ISNULL) OR (NOT libellebassin ISNULL))
+						THEN
+							outstr = outstr || '{';
+							IF (NOT codebassin ISNULL) THEN outstr = outstr || '"@id": "http://id.eaufrance.fr/cea/' || codebassin || '",'; END IF;
+							IF ((NOT codebassin ISNULL) OR ((NOT codeeubassin ISNULL) OR (NOT libellebassin ISNULL))) THEN outstr = outstr || '"@type": "WFD:RiverBasin"'; END IF;
+							IF (NOT codeeubassin ISNULL) THEN outstr = outstr || ', "EUcode": "' || codeeubassin || '"'; END IF;
+							IF (NOT libellebassin ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libellebassin) || '"'; END IF;
+							outstr = outstr || '},';
+						END IF;						
+									
+						*****************************************
+						
+						IF ((NOT codecommune ISNULL) OR (NOT libellecommune ISNULL)) 
+							THEN 
+							outstr = outstr || '{';
+								IF (NOT codecommune ISNULL) 
+									THEN outstr = outstr || '"@id": "http://id.insee.fr/geo/commune/' || codecommune || '",'; END IF;
+								IF ((NOT codecommune ISNULL) OR (NOT libellecommune ISNULL)) 
+									THEN outstr = outstr || '"@type": "http://data.ign.fr/def/geofla#Commune"'; END IF;
+								IF (NOT libellecommune ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libellecommune) || '"'; END IF;
+								outstr = outstr || '},';
+						END IF;
+						
+						IF ((NOT codedepartement ISNULL) OR (NOT libelledepartement ISNULL)) 
+							THEN 
+							outstr = outstr || '{';
+								IF (NOT codedepartement ISNULL) 
+									THEN outstr = outstr || '"@id": "http://id.insee.fr/geo/departement/' || codedepartement || '",'; END IF;
+								IF ((NOT codedepartement ISNULL) OR (NOT libelledepartement ISNULL)) 
+									THEN outstr = outstr || '"@type": "http://data.ign.fr/def/geofla#Departement"'; END IF;
+								IF (NOT libelledepartement ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libelledepartement) || '"'; END IF;
+								outstr = outstr || '},';
+						END IF;						
+
+						IF ((NOT coderegion ISNULL) OR (NOT libelleregion ISNULL)) 
+							THEN 
+							outstr = outstr || '{';
+								IF (NOT coderegion ISNULL) 
+									THEN outstr = outstr || '"@id": "http://id.insee.fr/geo/region/' || coderegion || '",'; END IF;
+								IF ((NOT coderegion ISNULL) OR (NOT libelleregion ISNULL)) 
+									THEN outstr = outstr || '"@type": "http://data.ign.fr/def/geofla#Region"'; END IF;
+								IF (NOT libelleregion ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libelleregion) || '"'; END IF;
+								outstr = outstr || '},';
+						END IF;						
+
+						IF ((NOT codecourseau ISNULL) OR (NOT libellecourseau ISNULL)) 
+							THEN 
+							outstr = outstr || '{';
+								IF (NOT codecourseau ISNULL) 
+									THEN outstr = outstr || '"@id": "http://id.eaufrance.fr/mdo/' || codecourseau || '",'; END IF;
+								IF ((NOT codecourseau ISNULL) OR (NOT libellecourseau ISNULL)) 
+									THEN outstr = outstr || '"@type": "WFD:WaterBody"'; END IF;
+								IF (NOT libellecourseau ISNULL) THEN outstr = outstr || ', "name": "' || sta.clean(libellecourseau) || '"'; END IF;
+								outstr = outstr || '},';
+						END IF;							
+					
+					outstr = btrim(outstr,',') || ']';
 			END IF;			
 			
 			
@@ -294,4 +342,3 @@ END
 
 $function$
 ;
-
