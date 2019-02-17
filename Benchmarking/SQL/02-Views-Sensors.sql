@@ -4,7 +4,7 @@ DROP MATERIALIZED VIEW sta."SENSORS";
 
 -- TODO: id should only be from cdmethana, not insituana
 CREATE MATERIALIZED VIEW sta."SENSORS" AS 
- SELECT base.cdmethana AS "ID",
+ SELECT base.cdmethana::bigint AS "ID",
     sta.clean(mana.nom) AS "DESCRIPTION",
     'application/vnd.geo+json'::text AS "ENCODING_TYPE",
     sta.clean(mana.nom) AS "METADATA",
@@ -18,8 +18,6 @@ CREATE MATERIALIZED VIEW sta."SENSORS" AS
 -- DROP INDEX sta.mv_pk_sensor;
 
 CREATE UNIQUE INDEX mv_pk_sensor
-  ON sta."SENSORS"
-  USING btree
-  ("ID");
+  ON sta."SENSORS"("ID");
 
 
