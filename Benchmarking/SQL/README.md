@@ -6,7 +6,7 @@ A first set of base views were created for features requiring complex join struc
 - senbase: base view for the creation of SENSORS
 - sta_net: base view for linking multiple networks to a station (THINGS)
 
-In addition, several pl/sql functions were created for the creation of the JSON structures required under the properties attribute:
+In addition, several pl/sql functions were created for the creation of the JSON structures required under the properties attribute (01-Functions.sql):
 - obs_prop: JSON properties for OBSERVSTIONS
 - thg_prop: JSON properties for THINGS
 - ds_prop: JSON properties for DATASTREAMS
