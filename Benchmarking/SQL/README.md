@@ -14,17 +14,17 @@ In addition, several pl/sql functions were created for the creation of the JSON 
 
 Based on these as required, materialized views were created for the basic FROST database tables, whereby string ids where utilized:
 - DATASTREAMS: 02-Views-Datastreams.sql
- - id: lpad(pc.cdunitemesure, 5, '0') || lpad(pc.cdfractionanalysee, 3, '0') || lpad(pc.cdsupport, 3, '0') || 
+  - id: lpad(pc.cdunitemesure, 5, '0') || lpad(pc.cdfractionanalysee, 3, '0') || lpad(pc.cdsupport, 3, '0') || 
 			lpad(pc.cdparametre, 5, '0') || lpad(pc.cdmethana, 5, '0') || lpad(pc.cdstationmesureeauxsurface, 8, '0')
 - FEATURES: 02-Views-Features.sql
 - LOCATIONS: 02-Views-Locations.sql
 - OBS_PROPERTIES: 02-Views-ObsProperties.sql
- - id: pc.cdparametre
+  - id: pc.cdparametre
 - OBSERVATIONS: 02-Views-Observations.sql
 - SENSORS: 02-Views-Sensors.sql
- - id: pc.cdmethana
+  - id: pc.cdmethana
 - THINGS: 02-Views-Things.sql
- - id: pc.cdstationmesureeauxsurface
+  - id: pc.cdstationmesureeauxsurface
 - THINGS_LOCATIONS: 02-Views-ThingsLocations.sql
 
 Based on these materialized views, new numeric ids are generated from the string ids (03-Views-IdGeneration.sql):
