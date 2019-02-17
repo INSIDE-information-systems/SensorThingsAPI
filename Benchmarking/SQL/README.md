@@ -17,7 +17,8 @@ Based on these as required, materialized views were created for the basic FROST 
   - id: lpad(pc.cdunitemesure, 5, '0') || lpad(pc.cdfractionanalysee, 3, '0') || lpad(pc.cdsupport, 3, '0') || 
 			lpad(pc.cdparametre, 5, '0') || lpad(pc.cdmethana, 5, '0') || lpad(pc.cdstationmesureeauxsurface, 8, '0')
 - FEATURES: 02-Views-Features.sql
-  - id: still checking if need to add cdstationmesureeauxsurface to cdprelevement
+  - id: pc.cdprelevement || lpad(pc.cdstationmesureeauxsurface, 8, '0') 
+  - note: didn't pad cdprelevement as defined 100 char long, should be unique this way
 - LOCATIONS: 02-Views-Locations.sql
   - id: pc.cdstationmesureeauxsurface
 - OBS_PROPERTIES: 02-Views-ObsProperties.sql
