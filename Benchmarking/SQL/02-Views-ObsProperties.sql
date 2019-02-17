@@ -4,12 +4,11 @@ DROP MATERIALIZED VIEW sta."OBS_PROPERTIES";
 
 CREATE MATERIALIZED VIEW sta."OBS_PROPERTIES" AS 
  SELECT parametre.code::bigint AS "ID",
-    parametre.libellelong AS "NAME",
-    parametre.libellelong AS "DEFINITION",
-    parametre.libellelong AS "DESCRIPTION",
+    sta.clean(parametre.libellelong) AS "NAME",
+    sta.clean(parametre.libellelong) AS "DEFINITION",
+    sta.clean(parametre.libellelong) AS "DESCRIPTION",
     NULL::text AS "PROPERTIES"
-   FROM referentiel.parametre
-WITH DATA;
+   FROM referentiel.parametre;
 
 
 -- Index: sta.mv_pk_obsprop
