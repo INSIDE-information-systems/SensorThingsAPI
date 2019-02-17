@@ -9,6 +9,7 @@ A first set of base views were created for features requiring complex join struc
 In addition, several pl/sql functions were created for the creation of the JSON structures required under the properties attribute:
 - obs_prop: JSON properties for OBSERVSTIONS
 - thg_prop: JSON properties for THINGS
+- ds_prop: JSON properties for DATASTREAMS
 - sta_nets: JSON object containing the list of networks for a station (THINGS)
 - clean_str: filter to remove tabs and " characters that cause issues with the JSON encoding
 
