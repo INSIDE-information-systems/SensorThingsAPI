@@ -1,6 +1,6 @@
 -- Materialized View: sta."DATASTREAMS"
 
-DROP MATERIALIZED VIEW sta."DATASTREAMS";
+DROP MATERIALIZED VIEW sta."DATASTREAMS"; 
 
 CREATE MATERIALIZED VIEW sta."DATASTREAMS" AS 
  SELECT lpad(base.cdunitemesure, 5, '0') || lpad(base.cdfractionanalysee, 3, '0') || lpad(base.cdsupport, 3, '0') || 
