@@ -13,17 +13,17 @@ AS $function$
 		IF ((NOT cdsupport ISNULL) OR (NOT supportnom ISNULL)) 
 			THEN 
 				outstr = outstr || '"medium": {';
-				IF (NOT cdsupport ISNULL) THEN outstr = outstr || '"code": "' || cdsupport || '"'; END IF;
+				IF (NOT cdsupport ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/sup/' || cdsupport || '"'; END IF;
 				IF ((NOT cdsupport ISNULL) AND (NOT supportnom ISNULL)) THEN outstr = outstr || ','; END IF;
-				IF (NOT supportnom ISNULL) THEN outstr = outstr || '"label": "' || supportnom || '"'; END IF;
+				IF (NOT supportnom ISNULL) THEN outstr = outstr || '"label": "' || sta.clean(supportnom) || '"'; END IF;
 				outstr = outstr || '},'; 
 		END IF;
 		IF ((NOT cdfractionanalysee ISNULL) OR (NOT fraction_analyseenom ISNULL)) 
 			THEN 
 				outstr = outstr || '"fraction": {';
-				IF (NOT cdfractionanalysee ISNULL) THEN outstr = outstr || '"code": "' || cdfractionanalysee || '"'; END IF;
+				IF (NOT cdfractionanalysee ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/fan/' || cdfractionanalysee || '"'; END IF;
 				IF ((NOT cdfractionanalysee ISNULL) AND (NOT fraction_analyseenom ISNULL)) THEN outstr = outstr || ','; END IF;
-				IF (NOT fraction_analyseenom ISNULL) THEN outstr = outstr || '"label": "' || fraction_analyseenom || '"'; END IF;
+				IF (NOT fraction_analyseenom ISNULL) THEN outstr = outstr || '"label": "' || sta.clean(fraction_analyseenom) || '"'; END IF;
 				outstr = outstr || '},'; 
 		END IF;
 		outstr = rtrim(outstr, ',') || '}';
@@ -31,6 +31,7 @@ AS $function$
 	END
 $function$
 ;
+
 
 ---------------------
 --- sta.clean_str ---
