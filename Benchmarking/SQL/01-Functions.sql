@@ -47,7 +47,78 @@ begin
 END
 $function$
 ;
+									 
+--------------------
+--- sta.foi_prop ---
+--------------------
 
+CREATE OR REPLACE FUNCTION sta.foi_prop(finaliteprel text, rpcode text, rpnom text, dateprel text, heureprel text, datefinprel text, heurefinprel text, codecourseau text, libellecourseau text)
+ RETURNS text
+ LANGUAGE plpgsql
+AS $function$
+	DECLARE	
+		outstr text;
+	BEGIN
+		outstr = '{';
+		IF (NOT finaliteprel ISNULL) 
+			THEN outstr = outstr || '"purpose": "'|| finaliteprel || '",';
+		END IF;
+		
+		IF ((NOT rpcode ISNULL) OR (NOT rpnom ISNULL)) 
+			THEN 
+				outstr = outstr || '"responsibleParty": {';
+				IF (NOT rpcode ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/sup/' || rpcode || '"'; END IF;
+				IF ((NOT rpcode ISNULL) AND (NOT rpnom ISNULL)) THEN outstr = outstr || ','; END IF;
+				IF (NOT rpnom ISNULL) THEN outstr = outstr || '"name": "' || sta.clean(rpnom) || '"'; END IF;
+				outstr = outstr || '},'; 
+		END IF;
+
+		IF ((NOT dateprel ISNULL) OR (NOT heureprel ISNULL) OR (NOT datefinprel ISNULL) OR (NOT heurefinprel ISNULL)) 
+			THEN
+			outstr = outstr || '"phenomenonTime": { ';
+			IF ((NOT dateprel ISNULL) OR (NOT heureprel ISNULL)) 
+				THEN 
+					outstr = outstr || '"startdate": "';
+					IF (NOT dateprel ISNULL) THEN outstr = outstr || dateprel; END IF;
+					IF ((NOT dateprel ISNULL) AND (NOT heureprel ISNULL)) THEN outstr = outstr || ' '; END IF;
+					IF (NOT heureprel ISNULL) THEN outstr = outstr || heureprel; END IF;
+					outstr = outstr || '"';
+			END IF;
+			IF (((NOT dateprel ISNULL) OR (NOT heureprel ISNULL)) AND ((NOT datefinprel ISNULL) OR (NOT heurefinprel ISNULL))) 	
+				THEN
+				outstr = outstr || ','; 
+			END IF;
+
+			IF ((NOT datefinprel ISNULL) OR (NOT heurefinprel ISNULL)) 
+				THEN 
+					outstr = outstr || '"enddate": "';
+					IF (NOT datefinprel ISNULL) THEN outstr = outstr || datefinprel; END IF;
+					IF ((NOT datefinprel ISNULL) AND (NOT heurefinprel ISNULL)) THEN outstr = outstr || ' '; END IF;
+					IF (NOT heurefinprel ISNULL) THEN outstr = outstr || heurefinprel; END IF;
+					outstr = outstr || '"';
+			END IF;
+			outstr = outstr || '},'; 
+		END IF;
+		
+		IF ((NOT codecourseau ISNULL) OR (NOT libellecourseau ISNULL)) 
+			THEN 
+				outstr = outstr || '"sampledFeature": {';
+				IF (NOT codecourseau ISNULL) 
+					THEN outstr = outstr || '"@id": "http://id.eaufrance.fr/mdo/' || codecourseau || '",'; END IF;
+				IF ((NOT codecourseau ISNULL) OR (NOT libellecourseau ISNULL)) 
+					THEN outstr = outstr || '"@type": "WFD:WaterBody"'; END IF;
+				IF (NOT libellecourseau ISNULL) 
+					THEN outstr = outstr || ', "name": "' || sta.clean(libellecourseau) || '"'; END IF;
+				outstr = outstr || '},';
+		END IF;		
+		
+		
+		outstr = rtrim(outstr, ',') || '}';
+		RETURN outstr;
+	END
+$function$
+;
+									 
 --------------------
 --- sta.obs_prop ---
 --------------------
