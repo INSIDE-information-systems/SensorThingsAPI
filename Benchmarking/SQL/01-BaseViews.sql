@@ -20,30 +20,19 @@ AS SELECT pc.cdstationmesureeauxsurface,
   GROUP BY pc.cdstationmesureeauxsurface, pc.cdmethana, pc.cdparametre, pc.cdsupport, pc.cdfractionanalysee, pc.cdunitemesure;
 
 -- base view for the creation of FEATURES
-DROP MATERIALIZED VIEW sta.sampbase cascade;
+DROP MATERIALIZED VIEW sta.foibase cascade;
 
-CREATE MATERIALIZED VIEW sta.sampbase
+CREATE MATERIALIZED VIEW sta.foibase
 AS SELECT pc.cdprelevement,
     pc.preleveur,
-        CASE
-            WHEN pc.finaliteprel IS NULL THEN 'Unknown'::character varying
-            ELSE pc.finaliteprel
-        END AS finaliteprel,
+    pc.finaliteprel,
     pc.dateprel,
     pc.heureprel,
-        CASE
-            WHEN pc.datefinprel IS NULL THEN 'Unknown'::text
-            ELSE pc.datefinprel::text
-        END AS datefinprel,
-        CASE
-            WHEN pc.heurefinprel IS NULL THEN 'Unknown'::text
-            ELSE pc.heurefinprel::text
-        END AS heurefinprel,
+    pc.datefinprel,
+    pc.heurefinprel,
     pc.cdstationmesureeauxsurface
    FROM physicochimie.analyse_physicochimie pc
-  GROUP BY pc.cdprelevement, pc.preleveur, pc.finaliteprel, pc.dateprel, pc.heureprel, pc.datefinprel, pc.heurefinprel, pc.cdstationmesureeauxsurface;
-
--- base view for the creation of SENSORS
+  GROUP BY pc.cdprelevement, pc.preleveur, pc.finaliteprel, pc.dateprel, pc.heureprel, pc.datefinprel, pc.heurefinprel, pc.cdstationmesureeauxsurface;-- base view for the creation of SENSORS
 DROP MATERIALIZED VIEW sta.senbase cascade;
 
 CREATE MATERIALIZED VIEW sta.senbase
