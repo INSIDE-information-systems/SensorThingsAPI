@@ -44,8 +44,9 @@ Sensors, ObservedProperties and Observations already have numeric ids. (TODO: CH
 From these generated IDs, and the materialized views, the data is copied into FROST tables(04-CopyData.sql).
 
 ## Updates ~17.2.19
-Added clean to all libelles
-removed insituana from DS and SENSORS IDs
-changed SENSORS and OBS_PROPERTIES IDs to numeric (taken from source DB, works!)
-moved all related features to "related" in THINGS
+- Added clean to all libelles
+- removed insituana from DS and SENSORS IDs
+- changed SENSORS and OBS_PROPERTIES IDs to numeric (taken from source DB, works!)
+- moved all related features to "related" in THINGS
+- filter on obsProps and thgs so only props or stations provided with observations
 
