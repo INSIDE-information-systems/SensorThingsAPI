@@ -3,12 +3,14 @@
 DROP MATERIALIZED VIEW sta."OBS_PROPERTIES";
 
 CREATE MATERIALIZED VIEW sta."OBS_PROPERTIES" AS 
- SELECT parametre.code::bigint AS "ID",
-    sta.clean(parametre.libellelong) AS "NAME",
-    sta.clean(parametre.libellelong) AS "DEFINITION",
-    sta.clean(parametre.libellelong) AS "DESCRIPTION",
+ SELECT par.code::bigint AS "ID",
+    sta.clean(par.libellelong) AS "NAME",
+    sta.clean(par.libellelong) AS "DEFINITION",
+    sta.clean(par.libellelong) AS "DESCRIPTION",
     NULL::text AS "PROPERTIES"
-   FROM referentiel.parametre;
+   from sta.propbase base
+   	left join referentiel.parametre par on par.code = base.cdparametre
+   where base.cdparametre is not NULL;
 
 
 -- Index: sta.mv_pk_obsprop
