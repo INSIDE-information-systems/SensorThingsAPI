@@ -50,6 +50,16 @@ CREATE MATERIALIZED VIEW sta.senbase
 AS SELECT analyse_physicochimie.cdmethana
    FROM physicochimie.analyse_physicochimie
   GROUP BY analyse_physicochimie.cdmethana;
+  
+-- base view for the creation of OBS_PROPERTIES
+DROP MATERIALIZED VIEW sta.propbase cascade;
+
+CREATE MATERIALIZED VIEW sta.propbase
+AS SELECT analyse_physicochimie.cdparametre
+   FROM physicochimie.analyse_physicochimie
+GROUP BY analyse_physicochimie.cdparametre;
+
+  
 
 -- base view for linking multiple networks to a station (THINGS)
 DROP MATERIALIZED VIEW sta.sta_net cascade;
