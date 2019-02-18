@@ -3,12 +3,13 @@ For the transformation of the Fairy Data to the FROST database structures, mater
 A first set of base views were created for features requiring complex join structures (01-baseviews.sql):
 - dsbase: base view for the creation of DATASTREAMS
 - propbase: base view for the creation of OBS_PROPERTIES
-- sampbase: base view for the creation of FEATURES
+- foibase: base view for the creation of FEATURES
 - senbase: base view for the creation of SENSORS
 - sta_net: base view for linking multiple networks to a station (THINGS)
 - thgbase: base view for the creation of THINGS
 
 In addition, several pl/sql functions were created for the creation of the JSON structures required under the properties attribute (01-Functions.sql):
+- foi_prop: JSON properties for FEATURES
 - obs_prop: JSON properties for OBSERVSTIONS
 - thg_prop: JSON properties for THINGS
 - ds_prop: JSON properties for DATASTREAMS
