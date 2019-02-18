@@ -59,7 +59,13 @@ AS SELECT analyse_physicochimie.cdparametre
    FROM physicochimie.analyse_physicochimie
 GROUP BY analyse_physicochimie.cdparametre;
 
-  
+-- base view for the creation of THINGS
+DROP MATERIALIZED VIEW sta.thgbase cascade;
+
+CREATE MATERIALIZED VIEW sta.thgbase
+AS SELECT analyse_physicochimie.cdstationmesureeauxsurface 
+   FROM physicochimie.analyse_physicochimie
+GROUP BY analyse_physicochimie.cdstationmesureeauxsurface;  
 
 -- base view for linking multiple networks to a station (THINGS)
 DROP MATERIALIZED VIEW sta.sta_net cascade;
