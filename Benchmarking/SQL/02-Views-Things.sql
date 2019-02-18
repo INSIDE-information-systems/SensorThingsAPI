@@ -7,5 +7,6 @@ CREATE MATERIALIZED VIEW sta."THINGS" AS
     sta.thg_prop(stat.codestation) AS "PROPERTIES",
     sta.clean(stat.libellestation) AS "NAME"
 FROM sta.thgbase base
-   	left join referentiel_interne.station_full stat on stat.codestation = base.cdstationmesureeauxsurface;
+   	left join referentiel_interne.station_full stat ON stat.codestation = base.cdstationmesureeauxsurface
+WHERE base.cdstationmesureeauxsurface IS NOT NULL;
 
