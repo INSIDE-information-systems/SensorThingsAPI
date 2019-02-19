@@ -307,12 +307,19 @@ BEGIN
 			END IF;
 			
 			-- codemasseeau: WFD:WaterBody (wfd waterbody code)
+			  -- http://id.eaufrance.fr/cea/' || codemasseeau
 			-- codesousbassin: WFD:RiverBasin (wfd sub-unit code)
+			  -- http://id.eaufrance.fr/cea/' || codesousbassin
 			-- codebassin: WFD:RiverBasin (wfd river basin district code)
+			  -- http://id.eaufrance.fr/cea/' || codebassin
 			-- codecommune: http://data.ign.fr/def/geofla#Commune
+			  -- http://id.insee.fr/geo/commune/' || codecommune
 			-- codedepartement: http://data.ign.fr/def/geofla#Departement
+			  -- http://id.insee.fr/geo/departement/' || codedepartement			       
 			-- coderegion: http://data.ign.fr/def/geofla#Region
+			  -- http://id.insee.fr/geo/region/' || coderegion					      
 			-- codecourseau: HY_Waterbody (river segment)
+			  -- http://id.eaufrance.fr/mdo/' || codecourseau					       
 
 			
 			
