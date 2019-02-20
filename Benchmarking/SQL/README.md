@@ -49,7 +49,9 @@ From these generated IDs, and the materialized views, the data is copied into FR
 ## Updates ~17.2.19
 - Added clean to all libelles
 - removed insituana from DS and SENSORS IDs
-- changed SENSORS and OBS_PROPERTIES IDs to numeric (taken from source DB, works!)
+- changed SENSORS and OBS_PROPERTIES, OBSERVATIONS IDs to numeric (taken from source DB, works!) - these should be maintained, as necessary for other links (either URIs to codelists, or related observations)
 - moved all related features to "related" in THINGS
-- filter on obsProps and thgs so only props or stations provided with observations
+- filter on obsProps and thgs so only props or stations provided with observations (SENSORS was already filtered)
+- added URI prefixes all over
+- added insituana to OBS, also fixed (fixing) Phenomenon-time-end
 
