@@ -26,11 +26,11 @@ Based on these as required, materialized views were created for the basic FROST 
 - LOCATIONS: 02-Views-Locations.sql
   - id: pc.cdstationmesureeauxsurface
 - OBS_PROPERTIES: 02-Views-ObsProperties.sql
-  - id: pc.cdparametre
+  - id: pc.cdparametre::bigint
 - OBSERVATIONS: 02-Views-Observations.sql
-  - id: pc.id
+  - id: pc.id::bigint
 - SENSORS: 02-Views-Sensors.sql
-  - id: pc.cdmethana
+  - id: pc.cdmethana::bigint
 - THINGS: 02-Views-Things.sql
   - id: pc.cdstationmesureeauxsurface
 - THINGS_LOCATIONS: 02-Views-ThingsLocations.sql
