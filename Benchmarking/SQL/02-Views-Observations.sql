@@ -9,7 +9,11 @@ CREATE MATERIALIZED VIEW sta."OBSERVATIONS" AS
             ELSE ((obs.dateprel || ' '::text) || obs.heureprel)::date
         END AS "PHENOMENON_TIME_START",
         CASE
-            WHEN obs.datefinprel IS NULL THEN NULL::date
+            WHEN obs.datefinprel IS NULL THEN 
+				CASE
+		            WHEN obs.heureprel IS NULL THEN obs.dateprel
+		            ELSE ((obs.dateprel || ' '::text) || obs.heureprel)::date
+		        END
             ELSE
             CASE
                 WHEN obs.heurefinprel IS NULL THEN obs.datefinprel
