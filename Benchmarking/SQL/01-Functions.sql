@@ -113,7 +113,7 @@ AS $function$
 				outstr = outstr || '},';
 		END IF;		
 		IF (NOT codeoperationcep ISNULL) 
-			THEN outstr = outstr || '"relatedSF": "'|| codeoperationcep || '",';
+			THEN outstr = outstr || '"relatedSF": "/Observations('|| codeoperationcep || ')",';
 		END IF;		
 		
 		outstr = rtrim(outstr, ',') || '}';
@@ -121,7 +121,6 @@ AS $function$
 	END
 $function$
 ;
-
 									 
 --------------------
 --- sta.obs_prop ---
