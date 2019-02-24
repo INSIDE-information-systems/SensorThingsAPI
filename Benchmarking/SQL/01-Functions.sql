@@ -123,10 +123,10 @@ $function$
 ;
 									 
 --------------------
---- sta.obs_prop ---
+--- sta.obs_param ---
 --------------------
 
-CREATE OR REPLACE FUNCTION sta.obs_prop(comresultatana text, commentairesana text, incertana text, rdtextraction text, rqana text, comlibelle text, difficulteana text, difanamnemo text, difficulteprel text, difprelmnemo text, cdmethfractionnement text, methnom text, cdmethodeprel text, methprelnom text)
+CREATE OR REPLACE FUNCTION sta.obs_param(comresultatana text, commentairesana text, incertana text, rdtextraction text, rqana text, comlibelle text, difficulteana text, difanamnemo text, difficulteprel text, difprelmnemo text, cdmethfractionnement text, methnom text, cdmethodeprel text, methprelnom text, insituana  text, insmnemo  text)
  RETURNS text
  LANGUAGE plpgsql
 AS $function$
@@ -139,26 +139,26 @@ AS $function$
 		
 		outstr = '{';
 		IF NOT comresultatana ISNULL 
-			THEN outstr = outstr || '"comment": "' || comresultatana || '",';
+			THEN outstr = outstr || '"comment": "' || sta.clean(comresultatana) || '",';
 		END IF;
 		
 		IF NOT commentairesana ISNULL 
-			THEN outstr = outstr || '"otherComment": "' || commentairesana || '",';
+			THEN outstr = outstr || '"otherComment": "' || sta.clean(commentairesana) || '",';
 		END IF;
 
 		IF ((NOT incertana ISNULL) OR (NOT rdtextraction ISNULL)) 
 			THEN 
 				outstr = outstr || '"analysis": {';
-				IF (NOT incertana ISNULL) THEN outstr = outstr || '"uncertainty": "' || incertana || '"'; END IF;
+				IF (NOT incertana ISNULL) THEN outstr = outstr || '"uncertainty": ' || incertana || ''; END IF;
 				IF ((NOT incertana ISNULL) AND (NOT rdtextraction ISNULL)) THEN outstr = outstr || ','; END IF;
-				IF (NOT rdtextraction ISNULL) THEN outstr = outstr || '"yield": "' || rdtextraction || '"'; END IF;
+				IF (NOT rdtextraction ISNULL) THEN outstr = outstr || '"yield": ' || rdtextraction || ''; END IF;
 				outstr = outstr || '},'; 
 		END IF;
 		
 		IF ((NOT rqana ISNULL) OR (NOT comlibelle ISNULL)) 
 			THEN 
 				outstr = outstr || '"analysisComment": {';
-				IF (NOT rqana ISNULL) THEN outstr = outstr || '"code": "' || rqana || '"'; END IF;
+				IF (NOT rqana ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/nsa/155#' || rqana || '"'; END IF;
 				IF ((NOT rqana ISNULL) AND (NOT comlibelle ISNULL)) THEN outstr = outstr || ','; END IF;
 				IF (NOT comlibelle ISNULL) THEN outstr = outstr || '"label": "' || comlibelle || '"'; END IF;
 				outstr = outstr || '},'; 
@@ -167,7 +167,7 @@ AS $function$
 		IF ((NOT difficulteana ISNULL) OR (NOT difanamnemo ISNULL)) 
 			THEN 
 				outstr = outstr || '"difficultyAna": {';
-				IF (NOT difficulteana ISNULL) THEN outstr = outstr || '"code": "' || difficulteana || '"'; END IF;
+				IF (NOT difficulteana ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/nsa/43#' || difficulteana || '"'; END IF;
 				IF ((NOT difficulteana ISNULL) AND (NOT difanamnemo ISNULL)) THEN outstr = outstr || ','; END IF;
 				IF (NOT difanamnemo ISNULL) THEN outstr = outstr || '"label": "' || difanamnemo || '"'; END IF;
 				outstr = outstr || '},'; 
@@ -176,7 +176,7 @@ AS $function$
 		IF ((NOT difficulteprel ISNULL) OR (NOT difprelmnemo ISNULL)) 
 			THEN 
 				outstr = outstr || '"difficultySamp": {';
-				IF (NOT difficulteprel ISNULL) THEN outstr = outstr || '"code": "' || difficulteprel || '"'; END IF;
+				IF (NOT difficulteprel ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/nsa/67#' || difficulteprel || '"'; END IF;
 				IF ((NOT difficulteprel ISNULL) AND (NOT difprelmnemo ISNULL)) THEN outstr = outstr || ','; END IF;
 				IF (NOT difprelmnemo ISNULL) THEN outstr = outstr || '"label": "' || difprelmnemo || '"'; END IF;
 				outstr = outstr || '},'; 
@@ -185,7 +185,7 @@ AS $function$
 		IF ((NOT cdmethfractionnement ISNULL) OR (NOT methnom ISNULL)) 
 			THEN 
 				outstr = outstr || '"fractionation": {';
-				IF (NOT cdmethfractionnement ISNULL) THEN outstr = outstr || '"code": "' || cdmethfractionnement || '"'; END IF;
+				IF (NOT cdmethfractionnement ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/met/' || cdmethfractionnement || '"'; END IF;
 				IF ((NOT cdmethfractionnement ISNULL) AND (NOT methnom ISNULL)) THEN outstr = outstr || ','; END IF;
 				IF (NOT methnom ISNULL) THEN outstr = outstr || '"label": "' || methnom || '"'; END IF;
 				outstr = outstr || '},'; 
@@ -194,11 +194,21 @@ AS $function$
 		IF ((NOT cdmethodeprel ISNULL) OR (NOT methprelnom ISNULL)) 
 			THEN 
 				outstr = outstr || '"methodSamp": {';
-				IF (NOT cdmethodeprel ISNULL) THEN outstr = outstr || '"code": "' || cdmethodeprel || '"'; END IF;
+				IF (NOT cdmethodeprel ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/met/' || cdmethodeprel || '"'; END IF;
 				IF ((NOT cdmethodeprel ISNULL) AND (NOT methprelnom ISNULL)) THEN outstr = outstr || ','; END IF;
 				IF (NOT methprelnom ISNULL) THEN outstr = outstr || '"label": "' || methprelnom || '"'; END IF;
 				outstr = outstr || '},'; 
 		END IF;
+		
+		IF ((NOT insituana ISNULL) OR (NOT insmnemo ISNULL)) 
+			THEN 
+				outstr = outstr || '"resultAcquisitionSource": {';
+				IF (NOT insituana ISNULL) THEN outstr = outstr || '"code": "http://id.eaufrance.fr/met/' || insituana || '"'; END IF;
+				IF ((NOT insituana ISNULL) AND (NOT insmnemo ISNULL)) THEN outstr = outstr || ','; END IF;
+				IF (NOT insmnemo ISNULL) THEN outstr = outstr || '"label": "' || insmnemo || '"'; END IF;
+				outstr = outstr || '},'; 
+		END IF;		
+		
 
 		outstr = rtrim(outstr, ',') || '}';
 
@@ -207,7 +217,6 @@ AS $function$
 
 $function$
 ;
-
 
 --------------------
 --- sta.sta_nets ---
