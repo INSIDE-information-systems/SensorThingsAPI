@@ -52,7 +52,7 @@ $function$
 --- sta.foi_prop ---
 --------------------
 
-CREATE OR REPLACE FUNCTION sta.foi_prop(finaliteprel text, rpcode text, rpnom text, dateprel text, heureprel text, datefinprel text, heurefinprel text, codecourseau text, libellecourseau text)
+CREATE OR REPLACE FUNCTION sta.foi_prop(finaliteprel text, rpcode text, rpnom text, dateprel text, heureprel text, datefinprel text, heurefinprel text, codecourseau text, libellecourseau text, codeoperationcep text)
  RETURNS text
  LANGUAGE plpgsql
 AS $function$
@@ -112,13 +112,16 @@ AS $function$
 					THEN outstr = outstr || ', "name": "' || sta.clean(libellecourseau) || '"'; END IF;
 				outstr = outstr || '},';
 		END IF;		
-		
+		IF (NOT codeoperationcep ISNULL) 
+			THEN outstr = outstr || '"relatedSF": "'|| codeoperationcep || '",';
+		END IF;		
 		
 		outstr = rtrim(outstr, ',') || '}';
 		RETURN outstr;
 	END
 $function$
 ;
+
 									 
 --------------------
 --- sta.obs_prop ---
