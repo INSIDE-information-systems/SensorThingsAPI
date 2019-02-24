@@ -73,31 +73,32 @@ AS $function$
 				outstr = outstr || '},'; 
 		END IF;
 
-		IF ((NOT dateprel ISNULL) OR (NOT heureprel ISNULL) OR (NOT datefinprel ISNULL) OR (NOT heurefinprel ISNULL)) 
+		IF ((NOT dateprel ISNULL) OR (NOT datefinprel ISNULL)) 
 			THEN
 			outstr = outstr || '"phenomenonTime": { ';
-			IF ((NOT dateprel ISNULL) OR (NOT heureprel ISNULL)) 
+			IF (NOT dateprel ISNULL) 
 				THEN 
 					outstr = outstr || '"startdate": "';
-					IF (NOT dateprel ISNULL) THEN outstr = outstr || dateprel; END IF;
-					IF ((NOT dateprel ISNULL) AND (NOT heureprel ISNULL)) THEN outstr = outstr || ' '; END IF;
-					IF (NOT heureprel ISNULL) THEN outstr = outstr || heureprel; END IF;
-					outstr = outstr || '"';
-			END IF;
-			IF (((NOT dateprel ISNULL) OR (NOT heureprel ISNULL)) AND ((NOT datefinprel ISNULL) OR (NOT heurefinprel ISNULL))) 	
-				THEN
-				outstr = outstr || ','; 
-			END IF;
+					IF (NOT heureprel ISNULL)
+						THEN outstr = outstr || dateprel || ' ' || heureprel; 
+						ELSE outstr = outstr || dateprel || ' 12:00:00'; 
+					END IF;
+					outstr = outstr || '", "enddate": "';
 
-			IF ((NOT datefinprel ISNULL) OR (NOT heurefinprel ISNULL)) 
-				THEN 
-					outstr = outstr || '"enddate": "';
-					IF (NOT datefinprel ISNULL) THEN outstr = outstr || datefinprel; END IF;
-					IF ((NOT datefinprel ISNULL) AND (NOT heurefinprel ISNULL)) THEN outstr = outstr || ' '; END IF;
-					IF (NOT heurefinprel ISNULL) THEN outstr = outstr || heurefinprel; END IF;
-					outstr = outstr || '"';
+					IF (NOT datefinprel ISNULL) 
+						THEN 
+							IF (NOT heurefinprel ISNULL)
+								THEN outstr = outstr || datefinprel || ' ' || heurefinprel; 
+								ELSE outstr = outstr || datefinprel || ' 12:00:00'; 
+							END IF;
+						ELSE
+							IF (NOT heureprel ISNULL)
+								THEN outstr = outstr || dateprel || ' ' || heureprel; 
+								ELSE outstr = outstr || dateprel || ' 12:00:00'; 
+							END IF;
+					END IF;
 			END IF;
-			outstr = outstr || '},'; 
+			outstr = outstr || '"},'; 
 		END IF;
 		
 		IF ((NOT codecourseau ISNULL) OR (NOT libellecourseau ISNULL)) 
