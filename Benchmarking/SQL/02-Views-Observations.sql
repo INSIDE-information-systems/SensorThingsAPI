@@ -36,7 +36,7 @@ CREATE MATERIALIZED VIEW sta."OBSERVATIONS" AS
     sta.obs_param(obs.comresultatana, obs.commentairesana, obs.incertana::text, obs.rdtextraction::text, obs.rqana::text, com.mnemo::text, obs.difficulteana::text, difana.mnemo::text, obs.difficulteprel::text, difprel.mnemo::text, obs.cdmethfractionnement::text, meth.nom, obs.cdmethodeprel::text, methprel.nom, obs.insituana, ins.mnemo) AS "PARAMETERS",
     lpad(obs.cdunitemesure, 5, '0') || lpad(obs.cdfractionanalysee, 3, '0') || lpad(obs.cdsupport, 3, '0') || 
 			lpad(obs.cdparametre, 5, '0') || lpad(obs.cdmethana, 5, '0') || lpad(obs.cdstationmesureeauxsurface, 8, '0') AS "DATASTREAM_ID",
-    obs.cdprelevement || '-' || obs.cdstationmesureeauxsurface AS "FEATURE_ID", 
+    obs.cdprelevement || '-' || lpad(obs.cdstationmesureeauxsurface, 8, '0') AS "FEATURE_ID", 
     obs.insituana,
     0 AS "RESULT_TYPE",
     NULL::text AS "RESULT_JSON",
