@@ -32,10 +32,7 @@ AS $function$
 					THEN outstr = outstr || ', "name": "' || sta.clean(libellecourseau) || '"'; END IF;
 				outstr = outstr || '},';
 		END IF;		
-		IF (NOT codeoperationcep ISNULL) 
-			THEN outstr = outstr || '"relatedSF": "'|| codeoperationcep || '",';
-		END IF;		
-		
+	
 		outstr = rtrim(outstr, ',') || '}';
 		RETURN outstr;
 	END
