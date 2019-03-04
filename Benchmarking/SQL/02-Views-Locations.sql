@@ -13,5 +13,6 @@ AS SELECT stat.codestation AS "ID",
     sta.clean(stat.libellestation) AS "NAME",
     NULL::bigint AS "GEN_FOI_ID",
     NULL::text AS "PROPERTIES"
-   FROM referentiel_interne.station_full stat;	
+FROM sta.thgbase base
+left join referentiel_interne.station_full stat ON stat.codestation = base.cdstationmesureeauxsurface
 
