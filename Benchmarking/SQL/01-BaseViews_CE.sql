@@ -3,28 +3,24 @@ DROP MATERIALIZED VIEW sta.ce_dsbase cascade;
 
 CREATE MATERIALIZED VIEW sta.ce_dsbase
 AS SELECT ce.cdstationmesureeauxsurface,
-ce.cdmethana,
+ce.cdmethode,
 ce.cdparametre,
 ce.cdunitemesure,
 min(ce.dateparenv) AS mindateprel,
 max(ce.dateparenv) AS maxdateprel,
 min(ce.heureparenv) AS minheureprel,
-max(ce.heureparenv) AS maxheureprel,
+max(ce.heureparenv) AS maxheureprel
 FROM physicochimie.condition_environnementale ce
 WHERE NOT ce.cdprelevement is NULL
-GROUP BY ce.cdstationmesureeauxsurface, ce.cdmethana, ce.cdparametre, ce.cdunitemesure;
+GROUP BY ce.cdstationmesureeauxsurface, ce.cdmethode, ce.cdparametre, ce.cdunitemesure;
 -- base view for the creation of FEATURES
 DROP MATERIALIZED VIEW sta.ce_foibase cascade;
 
 CREATE MATERIALIZED VIEW sta.ce_foibase
-AS SELECT ce.cdprelevement,
-    ce.preleveur,
-    ce.dateparenv,
-    ce.heureparenv,
-    ce.cdstationmesureeauxsurface
+AS SELECT cce.codeoperationcep
    FROM physicochimie.condition_environnementale ce
    WHERE NOT ce.cdprelevement is NULL
-  GROUP BY ce.cdprelevement, ce.preleveur, ce.dateparenv, ce.heureparenv, ce.cdstationmesureeauxsurface;
+  GROUP BY ce.codeoperationcep;
 	
 -- base view for the creation of SENSORS
 DROP MATERIALIZED VIEW sta.ce_senbase cascade;
