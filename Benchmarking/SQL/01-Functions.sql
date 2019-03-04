@@ -1,5 +1,20 @@
 ---------------------
---- sta.ds_prop ---
+--- sta.make_time ---
+---------------------
+
+CREATE OR REPLACE FUNCTION sta.make_time(dt text, tm text)
+ RETURNS text
+ LANGUAGE plpgsql
+AS $function$
+begin
+	IF (tm ISNULL) THEN return dt || ' 12:00:00'; END IF;
+	return dt || ' ' || tm;
+END
+$function$
+;
+
+---------------------
+--- sta.ds_prop   ---
 ---------------------
 
 CREATE OR REPLACE FUNCTION sta.ds_prop(cdsupport text, supportnom text, cdfractionanalysee text, fraction_analyseenom text)
