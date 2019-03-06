@@ -35,22 +35,45 @@ AS SELECT pc.cdprelevement,
    FROM physicochimie.analyse_physicochimie pc
    WHERE NOT pc.cdprelevement is NULL
   GROUP BY pc.cdprelevement, pc.preleveur, pc.finaliteprel, pc.dateprel, pc.heureprel, pc.datefinprel, pc.heurefinprel, pc.cdstationmesureeauxsurface;-- base view for the creation of SENSORS
+
+-- base view for the creation of SENSORS, for both analyse_physicochimie & condition_environnementale
 DROP MATERIALIZED VIEW sta.senbase cascade;
 
 CREATE MATERIALIZED VIEW sta.senbase
-AS SELECT analyse_physicochimie.cdmethana
-   FROM physicochimie.analyse_physicochimie
-   WHERE NOT pc.cdprelevement is NULL
-  GROUP BY analyse_physicochimie.cdmethana;
+AS 
+with meths as (  
+	SELECT pc.cdmethana meth
+		FROM physicochimie.analyse_physicochimie pc
+		WHERE NOT pc.cdprelevement IS NULL
+		GROUP BY pc.cdmethana
+		
+	UNION  
+		
+	SELECT ce.cdmethode meth
+		FROM physicochimie.condition_environnementale ce
+		WHERE NOT ce.cdprelevement IS NULL
+		GROUP BY ce.cdmethode  
+)
+select distinct meth from meths WHERE NOT meth IS NULL;	  
   
--- base view for the creation of OBS_PROPERTIES
+-- base view for the creation of OBS_PROPERTIES, for both analyse_physicochimie & condition_environnementale
 DROP MATERIALIZED VIEW sta.propbase cascade;
 
-CREATE MATERIALIZED VIEW sta.propbase
-AS SELECT analyse_physicochimie.cdparametre
-   FROM physicochimie.analyse_physicochimie
-   WHERE NOT pc.cdprelevement is NULL
-GROUP BY analyse_physicochimie.cdparametre;
+CREATE MATERIALIZED VIEW sta.propbase AS with props as (  
+	SELECT pc.cdparametre prop
+		FROM physicochimie.analyse_physicochimie pc
+		WHERE NOT pc.cdprelevement IS NULL
+		GROUP BY pc.cdparametre		
+		
+	UNION  
+		
+	SELECT ce.cdparametre prop
+		FROM physicochimie.condition_environnementale ce
+		WHERE NOT ce.cdprelevement is NULL
+		GROUP BY ce.cdparametre
+		
+)
+select distinct prop from props WHERE NOT prop IS NULL;	
 
 -- base view for the creation of THINGS
 DROP MATERIALIZED VIEW sta.thgbase cascade;
