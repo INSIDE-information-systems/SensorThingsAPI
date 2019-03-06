@@ -78,11 +78,20 @@ select distinct prop from props WHERE NOT prop IS NULL;
 -- base view for the creation of THINGS
 DROP MATERIALIZED VIEW sta.thgbase cascade;
 
-CREATE MATERIALIZED VIEW sta.thgbase
-AS SELECT analyse_physicochimie.cdstationmesureeauxsurface 
-   FROM physicochimie.analyse_physicochimie
-   WHERE NOT pc.cdprelevement is NULL
-GROUP BY analyse_physicochimie.cdstationmesureeauxsurface;  
+CREATE MATERIALIZED VIEW sta.thgbase AS with thgs as (  
+	SELECT pc.cdstationmesureeauxsurface 
+		FROM physicochimie.analyse_physicochimie pc
+		WHERE NOT pc.cdprelevement is NULL
+		GROUP BY pc.cdstationmesureeauxsurface 		
+		
+	UNION  
+		
+	SELECT ce.cdstationmesureeauxsurface
+		FROM physicochimie.condition_environnementale ce
+		WHERE NOT ce.cdprelevement is NULL
+		GROUP BY ce.cdstationmesureeauxsurface
+)
+select distinct cdstationmesureeauxsurface from thgs WHERE NOT cdstationmesureeauxsurface IS NULL; 
 
 -- base view for linking multiple networks to a station (THINGS)
 DROP MATERIALIZED VIEW sta.sta_net cascade;
