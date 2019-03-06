@@ -9,8 +9,8 @@ CREATE MATERIALIZED VIEW sta."OBS_PROPERTIES" AS
     sta.clean(par.libellelong) AS "DESCRIPTION",
     NULL::text AS "PROPERTIES"
    from sta.propbase base
-   	left join referentiel.parametre par on par.code = base.cdparametre
-where base.cdparametre is not NULL;
+   	left join referentiel.parametre par on par.code = base.prop
+where base.prop is not NULL;
 
 
 -- Index: sta.mv_pk_obsprop
