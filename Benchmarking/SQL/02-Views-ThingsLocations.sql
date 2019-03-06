@@ -3,8 +3,7 @@
 DROP MATERIALIZED VIEW sta."THINGS_LOCATIONS";
 
 CREATE MATERIALIZED VIEW sta."THINGS_LOCATIONS" AS 
- SELECT stat.codestation AS "THING_ID",
-    stat.codestation AS "LOCATION_ID"
-   FROM referentiel_interne.station_full stat
-WITH DATA;
+ SELECT stat.cdstationmesureeauxsurface AS "THING_ID",
+    stat.cdstationmesureeauxsurface AS "LOCATION_ID"
+   FROM sta.thgbase stat;
 
