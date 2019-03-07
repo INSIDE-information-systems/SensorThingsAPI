@@ -31,7 +31,7 @@ Based on these as required, materialized views were created for the basic FROST 
   - id: pc.cdprelevement || lpad(pc.cdstationmesureeauxsurface, 8, '0') 
   - note: didn't pad cdprelevement as defined 100 char long, should be unique this way
 - CE_FEATURES: 02-Views-CE_Features.sql
-  - id: ce.codeoperationcep
+  - id: 'CE_' || ce.codeoperationcep
 - LOCATIONS: 02-Views-Locations.sql
   - id: pc.cdstationmesureeauxsurface
 - OBS_PROPERTIES: 02-Views-ObsProperties.sql
@@ -46,15 +46,15 @@ Based on these as required, materialized views were created for the basic FROST 
   - id: pc.cdstationmesureeauxsurface
 
 
-Based on these materialized views, new numeric ids are generated from the string ids (03-Views-IdGeneration.sql):
-- sta.location_ids
+During the creation of these materialized views, new numeric ids are generated from the string ids via functions, the following tables are used for synchronization (01-IdGeneration.sql):
+- sta.obs_ids 
 - sta.thing_ids
 - sta.datastream_ids
 - sta.feature_ids
 
-Sensors, ObservedProperties and Observations already have numeric ids. (TODO: CHECK!)
+Sensors & ObservedProperties already have numeric ids. Thing ids are reused for locations. Observation ids are also done via function and table to merge ids coming from analyse_physicochimie with those from condition_environnementale 
 
-From these generated IDs, and the materialized views, the data is copied into FROST tables(04-CopyData.sql).
+From these materialized views, the data is copied into FROST tables(04-CopyData.sql).
 
 ## Updates ~17.2.19
 - Added clean to all libelles
