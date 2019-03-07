@@ -1,11 +1,9 @@
--- View: public."DATASTREAMS"
-
--- DROP MATERIALIZED VIEW public."DATASTREAMS_V";
+--DROP MATERIALIZED VIEW public."DATASTREAMS_V";
 
 CREATE MATERIALIZED VIEW public."DATASTREAMS_V"
 AS
  WITH obs_unit AS (
-         SELECT DISTINCT observation_1.dcuri,
+         SELECT DISTINCT observation_1.baseid,
             unitofmeasure.unit,
             unitofmeasure.identifier AS unitdef
            FROM rawdata.observation observation_1,
@@ -13,7 +11,7 @@ AS
             rawdata.unitofmeasure
           WHERE observation_1.id = result.observation AND result.uom = unitofmeasure.id
         )
- SELECT observation.dcuri AS "ID",
+ SELECT base_info.uri_ds::text || observation.baseid AS "ID",
     ("substring"(observedproperty.identifier::text, 26) || ' '::text) || foi2.description::text AS "DESCRIPTION",
     'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement'::text AS "OBSERVATION_TYPE",
     to_timestamp(to_char(observation.datestart::timestamp with time zone, 'YYYY-MM-DD'::text), 'YYYY-MM-DD'::text) AS "PHENOMENON_TIME_START",
@@ -22,7 +20,7 @@ AS
     to_timestamp(to_char(observation.dateend::timestamp with time zone, 'YYYY-MM-DD'::text), 'YYYY-MM-DD'::text) AS "RESULT_TIME_END",
     observation.procedure AS "SENSOR_ID",
     observation.observedproperty AS "OBS_PROPERTY_ID",
-    'http://guid.datacove.eu/BRGM/thg/' || observation.baseid AS "THING_ID",
+    base_info.uri_thg::text || observation.baseid::text AS "THING_ID",
     obs_unit.unit AS "UNIT_NAME",
     obs_unit.unit AS "UNIT_SYMBOL",
     obs_unit.unitdef AS "UNIT_DEFINITION",
@@ -32,83 +30,50 @@ AS
    FROM rawdata.observation,
     rawdata.observedproperty,
     obs_unit,
-    rawdata.foi2
-  WHERE observation.dcuri = obs_unit.dcuri AND observation.observedproperty = observedproperty.id AND observation.samplingfeature = foi2.id;
+    rawdata.foi2,
+    public.base_info
+  WHERE observation.baseid::text = obs_unit.baseid::text AND observation.observedproperty = observedproperty.id AND observation.samplingfeature = foi2.id;
 
 ALTER TABLE public."DATASTREAMS_V"
     OWNER TO sensorthings;
-
 
 CREATE UNIQUE INDEX mv_pk_datastream
     ON public."DATASTREAMS_V" USING btree
     ("ID");
 
-
--- View: public."FEATURES"
-
 -- DROP MATERIALIZED VIEW public."FEATURES_V";
 
 CREATE MATERIALIZED VIEW public."FEATURES_V"
 AS
- SELECT foi.dcuri AS "ID",
+ SELECT base_info.uri_foi::text || foi.baseid AS "ID",
     foi.description AS "DESCRIPTION",
     'application/vnd.geo+json'::text AS "ENCODING_TYPE",
     st_asgeojson(foi.geom) AS "FEATURE",
     foi.geom AS "GEOM",
     foi.identifier::text AS "NAME",
-        CASE
-            WHEN foi.sampledfeature IS NULL THEN '{"sampledFeature": "https://sweet.jpl.nasa.gov/2.3/realmHydro.owl#Aquifer"}'::text
-            ELSE
-            CASE
-                WHEN foi2.localidentifier IS NULL THEN '{"sampledFeature": "https://sweet.jpl.nasa.gov/2.3/realmHydro.owl#Aquifer"}'::text
-                ELSE ('{"sampledFeature": "'::text || foi2.dcuri::text) || '"}'::text
-            END
-        END AS "PROPERTIES"
-   FROM rawdata.foi2 foi
+		CASE
+				WHEN foi.sampledfeature IS NULL THEN '{"sampledFeature": "https://sweet.jpl.nasa.gov/2.3/realmHydro.owl#Aquifer"}'::text
+				ELSE
+				CASE
+						WHEN foi2.localidentifier IS NULL THEN '{"sampledFeature": "https://sweet.jpl.nasa.gov/2.3/realmHydro.owl#Aquifer"}'::text
+						ELSE ('{"sampledFeature": "'::text || base_info.uri_foi::text || foi2.baseid) || '"}'::text
+				END
+		END AS "PROPERTIES"
+   FROM base_info, rawdata.foi2 foi
      LEFT JOIN rawdata.foi2 foi2 ON foi.sampledfeature = foi2.id;
 
 ALTER TABLE public."FEATURES_V"
     OWNER TO sensorthings;
 
-
-CREATE UNIQUE INDEX mv_pk_foi_V
+CREATE UNIQUE INDEX mv_pk_foi_v
     ON public."FEATURES_V" USING btree
-    ("ID");		
-	
--- View: public."LOCATIONS"
-
--- DROP MATERIALIZED VIEW public."LOCATIONS_V";
-
-CREATE MATERIALIZED VIEW public."LOCATIONS_V"
-AS
- SELECT 'http://guid.datacove.eu/BRGM/loc/' || observation.baseid AS "ID",
-    'Forage'::text || foi2.localidentifier::text AS "DESCRIPTION",
-    'application/vnd.geo+json'::text AS "ENCODING_TYPE",
-    st_asgeojson(foi2.geom) AS "LOCATION",
-    foi2.geom AS "GEOM",
-    'Forage'::text || foi2.localidentifier::text AS "NAME",
-		'http://guid.datacove.eu/BRGM/foi/' || observation.baseid AS "GEN_FOI_ID",
-    NULL::text AS "PROPERTIES"
-   FROM rawdata.observation,
-    rawdata.foi2,
-    rawdata.observedproperty
-  WHERE observation.samplingfeature = foi2.id AND observation.observedproperty = observedproperty.id;
-
-ALTER TABLE public."LOCATIONS_V"
-    OWNER TO sensorthings;
-
-
-CREATE UNIQUE INDEX mv_pk_location
-    ON public."LOCATIONS_V" USING btree
     ("ID");
-
--- View: public."OBSERVATIONS"
 
 -- DROP MATERIALIZED VIEW public."OBSERVATIONS_V";
 
 CREATE MATERIALIZED VIEW public."OBSERVATIONS_V"
 AS
- SELECT observation.dcuri || '-' || result.id AS "ID",
+ SELECT (base_info.uri_res::text || observation.baseid::text || '-'::text) || result.id AS "ID",
     to_timestamp(to_char(result."time"::timestamp with time zone, 'YYYY-MM-DD HH:MI:SS'::text), 'YYYY-MM-DD HH:MI:SS'::text) AS "PHENOMENON_TIME_START",
     to_timestamp(to_char(result."time"::timestamp with time zone, 'YYYY-MM-DD HH:MI:SS'::text), 'YYYY-MM-DD HH:MI:SS'::text) AS "PHENOMENON_TIME_END",
     to_timestamp(to_char(result."time"::timestamp with time zone, 'YYYY-MM-DD HH:MI:SS'::text), 'YYYY-MM-DD HH:MI:SS'::text) AS "RESULT_TIME",
@@ -118,15 +83,16 @@ AS
     to_timestamp(to_char(result."time"::timestamp with time zone, 'YYYY-MM-DD HH:MI:SS'::text), 'YYYY-MM-DD HH:MI:SS'::text) AS "VALID_TIME_START",
     to_timestamp('9999-01-01 01:00:00'::text, 'YYYY-MM-DD HH:MI:SS'::text) AS "VALID_TIME_END",
     NULL::text AS "PARAMETERS",
-    observation.dcuri AS "DATASTREAM_ID",
-    observation.samplingfeature AS "FEATURE_ID",
+    base_info.uri_ds::text || observation.baseid::text AS "DATASTREAM_ID",
+    base_info.uri_foi::text || 'foi/' || observation.baseid::text AS "FEATURE_ID",
     0::smallint AS "RESULT_TYPE",
     NULL::text AS "RESULT_JSON",
     NULL::boolean AS "RESULT_BOOLEAN",
     NULL::bigint AS "MULTI_DATASTREAM_ID"
    FROM rawdata.result,
     rawdata.observation,
-    rawdata.quality
+    rawdata.quality,
+    base_info
   WHERE result.observation = observation.id AND result.quality = quality.id;
 
 ALTER TABLE public."OBSERVATIONS_V"
@@ -136,8 +102,6 @@ ALTER TABLE public."OBSERVATIONS_V"
 CREATE INDEX mv_pk_obs
     ON public."OBSERVATIONS_V" USING btree
     ("ID");
-
--- View: public."OBS_PROPERTIES"
 
 -- DROP MATERIALIZED VIEW public."OBS_PROPERTIES_V";
 
@@ -153,12 +117,9 @@ AS
 ALTER TABLE public."OBS_PROPERTIES_V"
     OWNER TO sensorthings;
 
-
 CREATE UNIQUE INDEX mv_pk_obsprop
     ON public."OBS_PROPERTIES_V" USING btree
     ("ID");
-
--- View: public."SENSORS"
 
 -- DROP MATERIALIZED VIEW public."SENSORS_V";
 
@@ -175,56 +136,77 @@ AS
 ALTER TABLE public."SENSORS_V"
     OWNER TO sensorthings;
 
-
 CREATE UNIQUE INDEX mv_pk_sensor
     ON public."SENSORS_V" USING btree
     ("ID");
-	
--- View: public."THINGS"
 
--- DROP MATERIALIZED VIEW public."THINGS_V";
-
+--DROP MATERIALIZED VIEW public."THINGS_V";
 CREATE MATERIALIZED VIEW public."THINGS_V"
+TABLESPACE pg_default
 AS
- SELECT 'http://guid.datacove.eu/BRGM/thg/' || observation.baseid AS "ID",
-    ("substring"(observedproperty.identifier::text, 26) || '_'::text) || featureofinterest.localidentifier::text AS "DESCRIPTION",
-    ((((((((((((((('{"namespace": "'::text || obsinfo.namespace) || '", "mediamonitored": "'::text) || obsinfo.mediamonitored) || '", "measurementregime": "'::text) || obsinfo.measurementregime) || '", "mobile": "'::text) || obsinfo.mobile) || '", "processtype": "'::text) || obsinfo.processtype) || '", "resultnature": "'::text) || obsinfo.resultnature) || '", "startdate": "'::text) || obsinfo.startdate) || '", "enddate": "'::text) || obsinfo.enddate) || '" }'::text AS "PROPERTIES",
-    ("substring"(observedproperty.identifier::text, 26) || '_'::text) || featureofinterest.localidentifier::text AS "NAME"
+ SELECT base_info.uri_thg::text || observation.baseid::text AS "ID",
+    ("substring"(observedproperty.identifier::text, 26) || '_'::text) || foi2.baseid::text AS "DESCRIPTION",
+    ((((((((((((((('{"namespace": "'::text || base_info.namespace) || '", "mediamonitored": "'::text) || obsinfo.mediamonitored) || '", "measurementregime": "'::text) || obsinfo.measurementregime) || '", "mobile": "'::text) || obsinfo.mobile) || '", "processtype": "'::text) || obsinfo.processtype) || '", "resultnature": "'::text) || obsinfo.resultnature) || '", "startdate": "'::text) || obsinfo.startdate) || '", "enddate": "'::text) || obsinfo.enddate) || '" }'::text AS "PROPERTIES",
+    ("substring"(observedproperty.identifier::text, 26) || '_'::text) || foi2.baseid::text AS "NAME"
    FROM rawdata.observation,
-    rawdata.featureofinterest,
+    rawdata.foi2,
     rawdata.observedproperty,
-    rawdata.obsinfo
-  WHERE observation.samplingfeature = featureofinterest.id AND observation.observedproperty = observedproperty.id AND observation.id = obsinfo.id;
+    rawdata.obsinfo,
+    public.base_info
+  WHERE observation.samplingfeature = foi2.id AND observation.observedproperty = observedproperty.id AND observation.id = obsinfo.id;
 
 ALTER TABLE public."THINGS_V"
     OWNER TO sensorthings;
 
-
 CREATE UNIQUE INDEX mv_pk_thing
     ON public."THINGS_V" USING btree
-    ("ID");	
-		
--- View: public."THINGS_LOCATIONS_V"
+    ("ID");
+
+--DROP MATERIALIZED VIEW public."LOCATIONS_V";
+
+CREATE MATERIALIZED VIEW public."LOCATIONS_V"
+AS
+ SELECT base_info.uri_loc::text || observation.baseid::text AS "ID",
+    'Forage'::text || foi2.localidentifier::text AS "DESCRIPTION",
+    'application/vnd.geo+json'::text AS "ENCODING_TYPE",
+    st_asgeojson(foi2.geom) AS "LOCATION",
+    foi2.geom AS "GEOM",
+    'Forage'::text || foi2.localidentifier::text AS "NAME",
+    base_info.uri_foi::text ||'foi/'::text || observation.baseid::text AS "GEN_FOI_ID",
+    NULL::text AS "PROPERTIES"
+   FROM rawdata.observation,
+    rawdata.foi2,
+    rawdata.observedproperty,
+    base_info
+  WHERE observation.samplingfeature = foi2.id AND observation.observedproperty = observedproperty.id
+WITH DATA;
+
+ALTER TABLE public."LOCATIONS_V"
+    OWNER TO sensorthings;
+
+CREATE UNIQUE INDEX mv_pk_location
+    ON public."LOCATIONS_V" 
+    ("ID");
 
 -- DROP MATERIALIZED VIEW public."THINGS_LOCATIONS_V";
 
 CREATE MATERIALIZED VIEW public."THINGS_LOCATIONS_V"
 AS
- SELECT 'http://guid.datacove.eu/BRGM/thg/' || observation.baseid AS "THING_ID",
-    'http://guid.datacove.eu/BRGM/loc/' || observation.baseid AS "LOCATION_ID"
+ SELECT base_info.uri_thg::text || observation.baseid::text AS "THING_ID",
+    base_info.uri_loc::text || observation.baseid::text AS "LOCATION_ID"
    FROM rawdata.observation,
     rawdata.featureofinterest,
-    rawdata.observedproperty
+    rawdata.observedproperty,
+    base_info
   WHERE observation.samplingfeature = featureofinterest.id AND observation.observedproperty = observedproperty.id;
 
 ALTER TABLE public."THINGS_LOCATIONS_V"
     OWNER TO sensorthings;
-
 
 CREATE INDEX mv_pk_locthing
     ON public."THINGS_LOCATIONS_V" USING btree
     ("THING_ID");
 CREATE INDEX mv_pk_thingloc
     ON public."THINGS_LOCATIONS_V" USING btree
-    ("LOCATION_ID");		
-	
+    ("LOCATION_ID");
+
