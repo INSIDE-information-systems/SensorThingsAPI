@@ -4,29 +4,18 @@ DROP MATERIALIZED VIEW sta."OBSERVATIONS";
 
 CREATE MATERIALIZED VIEW sta."OBSERVATIONS" AS 
  SELECT obs.id::bigint AS "ID",
+		sta.make_time(obs.dateprel, obs.heureprel)::date AS "PHENOMENON_TIME_START",
+		
 		CASE
-				WHEN obs.heureprel IS NULL THEN (obs.dateprel || ' 12:00:00')::date
-				ELSE (obs.dateprel || ' ' || obs.heureprel)::date
-		END AS "PHENOMENON_TIME_START",
-		CASE
-				WHEN obs.datefinprel IS NULL THEN
-				CASE
-						WHEN obs.heureprel IS NULL THEN (obs.dateprel || ' 12:00:00')::date
-						ELSE (obs.dateprel || ' ' || obs.heureprel)::date
-				END
-				ELSE
-				CASE
-						WHEN obs.heurefinprel IS NULL THEN (obs.datefinprel || ' 12:00:00')::date
-						ELSE (obs.datefinprel || ' ' || obs.heurefinprel)::date
-				END
+			WHEN obs.datefinprel IS NULL THEN
+				sta.make_time(obs.dateprel, obs.heureprel)::date
+			ELSE
+				sta.make_time(obs.datefinprel, obs.heurefinprel)::date
 		END AS "PHENOMENON_TIME_END",				
 		CASE
-				WHEN obs.dateana IS NULL THEN NULL::date
-				ELSE
-				CASE
-						WHEN obs.heureana IS NULL THEN (obs.dateana || ' 12:00:00')::date
-						ELSE (obs.dateana || ' ' || obs.heureana)::date
-				END
+			WHEN obs.dateana IS NULL THEN NULL::date
+			ELSE
+				sta.make_time(obs.dateana, obs.heureana)::date
 		END AS "RESULT_TIME",
     obs.rsana AS "RESULT_NUMBER",
     obs.rsana::text AS "RESULT_STRING",
@@ -34,10 +23,9 @@ CREATE MATERIALIZED VIEW sta."OBSERVATIONS" AS
     NULL::date AS "VALID_TIME_START",
     NULL::date AS "VALID_TIME_END",
     sta.obs_param(obs.comresultatana, obs.commentairesana, obs.incertana::text, obs.rdtextraction::text, obs.rqana::text, com.mnemo::text, obs.difficulteana::text, difana.mnemo::text, obs.difficulteprel::text, difprel.mnemo::text, obs.cdmethfractionnement::text, meth.nom, obs.cdmethodeprel::text, methprel.nom, obs.insituana, ins.mnemo) AS "PARAMETERS",
-    lpad(obs.cdunitemesure, 5, '0') || lpad(obs.cdfractionanalysee, 3, '0') || lpad(obs.cdsupport, 3, '0') || 
-			lpad(obs.cdparametre, 5, '0') || lpad(obs.cdmethana, 5, '0') || lpad(obs.cdstationmesureeauxsurface, 8, '0') AS "DATASTREAM_ID",
-    obs.cdprelevement || '-' || lpad(obs.cdstationmesureeauxsurface, 8, '0') AS "FEATURE_ID", 
-    obs.insituana,
+    sta.numeric_id_datastream(lpad(obs.cdunitemesure, 5, '0') || lpad(obs.cdfractionanalysee, 3, '0') || lpad(obs.cdsupport, 3, '0') || 
+			lpad(obs.cdparametre, 5, '0') || lpad(obs.cdmethana, 5, '0') || lpad(obs.cdstationmesureeauxsurface, 8, '0')) AS "DATASTREAM_ID",
+    sta.numeric_id_feature(obs.cdprelevement || '-' || lpad(obs.cdstationmesureeauxsurface, 8, '0')) AS "FEATURE_ID", 
     0 AS "RESULT_TYPE",
     NULL::text AS "RESULT_JSON",
     NULL::boolean AS "RESULT_BOOLEAN",
