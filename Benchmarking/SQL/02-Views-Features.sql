@@ -4,7 +4,7 @@ DROP MATERIALIZED VIEW sta."FEATURES";
 
 -- Correct order: longitude, latitude
 CREATE MATERIALIZED VIEW sta."FEATURES" AS 
- SELECT foi.cdprelevement || '-' || lpad(foi.cdstationmesureeauxsurface, 8, '0') AS "ID",
+ SELECT sta.numeric_id_feature(foi.cdprelevement || '-' || lpad(foi.cdstationmesureeauxsurface, 8, '0')) AS "ID",
     'Water Sample from ' || sta.libellestation || ' taken on ' || foi.dateprel || ' at ' || foi.heureprel AS "DESCRIPTION",
     'Water Sample from ' || sta.libellestation || ' taken on ' || foi.dateprel || ' at ' || foi.heureprel AS "NAME",
     'application/vnd.geo+json' AS "ENCODING",
