@@ -115,7 +115,36 @@ AS $function$
 --- OBSERVATIONS ---
 --------------------
 
--- Observations already have numeric IDs
+-- Observations already have numeric IDs, but this way we assure no overlaps between observations from physicochimie and ce
+
+drop table if exists sta.obs_ids;
+create table sta.obs_ids (
+	nr_id	bigserial PRIMARY KEY,
+	str_id  varchar
+);
+
+-- Insert not necessary if using function below
+--insert into sta.obs_ids (str_id)
+--select "ID" from sta."OBSERVATIONS";
+
+CREATE INDEX obs_ids_strid
+  ON sta.obs_ids(str_id);
+
+CREATE OR REPLACE FUNCTION sta.numeric_id_obs(id_text text)
+ RETURNS bigint
+ LANGUAGE plpgsql
+AS $function$ 	
+	declare id_number int8;
+	begin
+		select nr_id into id_number from sta.obs_ids where str_id=id_text;
+		IF NOT FOUND THEN
+    		insert into sta.obs_ids (str_id) values (id_text) returning nr_id into id_number;
+		END IF;
+		return id_number;
+	end
+ $function$
+;
+
 
 
 -----------------
