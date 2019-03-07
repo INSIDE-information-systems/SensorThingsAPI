@@ -5,7 +5,7 @@ DROP MATERIALIZED VIEW sta."LOCATIONS";
 -- Correct order: longitude, latitude
 	 
 CREATE MATERIALIZED VIEW sta."LOCATIONS"
-AS SELECT stat.codestation AS "ID",
+AS SELECT sta.numeric_id_thing(stat.codestation) AS "ID",
     sta.clean(stat.libellestation) AS "DESCRIPTION",
     'application/vnd.geo+json'::text AS "ENCODING_TYPE",
     '{"type":"Point","coordinates":[' || stat.longitude || ',' || stat.latitude || ']}' AS "LOCATION",
