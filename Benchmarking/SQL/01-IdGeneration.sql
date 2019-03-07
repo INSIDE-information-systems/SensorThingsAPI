@@ -45,8 +45,9 @@ create table sta.thing_ids (
 	str_id  varchar
 );
 
-insert into sta.thing_ids (str_id)
-select "ID" from sta."THINGS";
+-- Insert not necessary if using function below
+--insert into sta.thing_ids (str_id)
+--select "ID" from sta."THINGS";
 
 CREATE INDEX thing_ids_strid
   ON sta.thing_ids
@@ -93,8 +94,9 @@ create table sta.datastream_ids (
 	str_id  varchar
 );
 
-insert into sta.datastream_ids (str_id)
-select "ID" from sta."DATASTREAMS";
+-- Insert not necessary if using function below
+--insert into sta.datastream_ids (str_id)
+--select "ID" from sta."DATASTREAMS";
 
 CREATE INDEX datastream_ids_strid
   ON sta.datastream_ids
@@ -127,8 +129,9 @@ create table sta.feature_ids (
 	str_id  varchar
 );
 
-insert into sta.feature_ids (str_id)
-select "ID" from sta."FEATURES";
+-- Insert not necessary if using function below
+--insert into sta.feature_ids (str_id)
+--select "ID" from sta."FEATURES";
 
 CREATE INDEX feature_ids_strid
   ON sta.feature_ids
