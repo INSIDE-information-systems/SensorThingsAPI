@@ -2,7 +2,7 @@
 ---  sta.ce_foi_prop  ---
 -------------------------
 
-CREATE OR REPLACE FUNCTION sta.ce_foi_prop(dateprel text, heureprel text, datefinprel text, heurefinprel text, codecourseau text, libellecourseau text, codeoperationcep text)
+CREATE OR REPLACE FUNCTION sta.ce_foi_prop(dateprel date, heureprel time, datefinprel date, heurefinprel time, codecourseau text, libellecourseau text)
  RETURNS text
  LANGUAGE plpgsql
 AS $function$
@@ -15,8 +15,8 @@ AS $function$
 			outstr = outstr || '"phenomenonTime": { ';
 			IF (NOT dateprel ISNULL) 
 				THEN 
-					outstr = outstr || '"startdate": "' || sta.make_time(dateprel::text, heureprel::text);
-					outstr = outstr || '", "enddate": "' || sta.make_time(dateprel::text, heureprel::text);
+					outstr = outstr || '"startdate": "' || sta.make_time(dateprel, heureprel);
+					outstr = outstr || '", "enddate": "' || sta.make_time(dateprel, heureprel);
 			END IF;
 			outstr = outstr || '"},'; 
 		END IF;
@@ -32,9 +32,10 @@ AS $function$
 					THEN outstr = outstr || ', "name": "' || sta.clean(libellecourseau) || '"'; END IF;
 				outstr = outstr || '},';
 		END IF;		
-	
+		
 		outstr = rtrim(outstr, ',') || '}';
 		RETURN outstr;
 	END
 $function$
 ;
+
