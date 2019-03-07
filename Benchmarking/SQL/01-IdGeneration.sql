@@ -1,40 +1,3 @@
------------------
---- LOCATIONS ---
------------------
--- KS: Superfluous, as LOCATIONS:THINGS are 1:1, thus always been reusing the same base tables for both
------------------
-
-
-drop table if exists sta.location_ids;
-create table sta.location_ids (
-	nr_id	bigserial PRIMARY KEY,
-	str_id  varchar
-);
-
-insert into sta.location_ids (str_id)
-select "ID" from sta."LOCATIONS";
-
-CREATE INDEX location_ids_strid
-  ON sta.location_ids
-  USING btree
-  (str_id COLLATE pg_catalog."default");
-
-CREATE OR REPLACE FUNCTION sta.numeric_id_location(id_text text)
- RETURNS bigint
- LANGUAGE plpgsql
-AS $function$ 	
-	declare id_number int8;
-	begin
-		select nr_id into id_number from sta.location_ids where str_id=id_text;
-		IF NOT FOUND THEN
-    		insert into sta.location_ids (str_id) values (id_text) returning nr_id into id_number;
-		END IF;
-		return id_number;
-	end
- $function$
-;
-
-
 --------------
 --- THINGS ---
 --------------
@@ -66,7 +29,6 @@ AS $function$
 	end
  $function$
 ;
-
 
 ---------------
 --- SENSORS ---
@@ -155,4 +117,40 @@ AS $function$
 
 -- Observations already have numeric IDs
 
+
+-----------------
+--- LOCATIONS ---
+-----------------
+-- KS: Superfluous, as LOCATIONS:THINGS are 1:1, thus always been reusing the same base tables for both
+-----------------
+
+
+drop table if exists sta.location_ids;
+create table sta.location_ids (
+	nr_id	bigserial PRIMARY KEY,
+	str_id  varchar
+);
+
+insert into sta.location_ids (str_id)
+select "ID" from sta."LOCATIONS";
+
+CREATE INDEX location_ids_strid
+  ON sta.location_ids
+  USING btree
+  (str_id COLLATE pg_catalog."default");
+
+CREATE OR REPLACE FUNCTION sta.numeric_id_location(id_text text)
+ RETURNS bigint
+ LANGUAGE plpgsql
+AS $function$ 	
+	declare id_number int8;
+	begin
+		select nr_id into id_number from sta.location_ids where str_id=id_text;
+		IF NOT FOUND THEN
+    		insert into sta.location_ids (str_id) values (id_text) returning nr_id into id_number;
+		END IF;
+		return id_number;
+	end
+ $function$
+;
 
