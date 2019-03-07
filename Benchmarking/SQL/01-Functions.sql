@@ -2,7 +2,7 @@
 --- sta.make_time ---
 ---------------------
 
-CREATE OR REPLACE FUNCTION sta.make_time(dt text, tm text)
+CREATE OR REPLACE FUNCTION sta.make_time(dt date, tm time without time zone)
  RETURNS text
  LANGUAGE plpgsql
 AS $function$
@@ -128,7 +128,7 @@ AS $function$
 				outstr = outstr || '},';
 		END IF;		
 		IF (NOT codeoperationcep ISNULL) 
-			THEN outstr = outstr || '"relatedSF": "/Observations('|| codeoperationcep || ')",';
+			THEN outstr = outstr || '"relatedSF": "/Features('|| sta.numeric_id_feature(codeoperationcep) || ')",';
 		END IF;		
 		
 		outstr = rtrim(outstr, ',') || '}';
