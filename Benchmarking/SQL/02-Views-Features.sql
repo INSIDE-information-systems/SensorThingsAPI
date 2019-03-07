@@ -17,7 +17,5 @@ CREATE MATERIALIZED VIEW sta."FEATURES" AS
   WHERE NOT foi.cdprelevement IS NULL;
 
 CREATE UNIQUE INDEX mv_pk_foi
-  ON sta."FEATURES"
-  USING btree
-  ("ID" COLLATE pg_catalog."default");
+  ON sta."FEATURES" ("ID");
 
