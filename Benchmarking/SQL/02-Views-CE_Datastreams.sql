@@ -2,15 +2,15 @@
 
 
 CREATE MATERIALIZED VIEW sta."CE_DATASTREAMS" AS 
- SELECT lpad(base.cdunitemesure, 5, '0') || 
-			lpad(base.cdparametre, 5, '0') || lpad(base.cdmethode, 5, '0') || lpad(base.cdstationmesureeauxsurface, 8, '0') AS "ID",
+ SELECT sta.numeric_id_datastream(lpad(base.cdunitemesure, 5, '0') || 
+			lpad(base.cdparametre, 5, '0') || lpad(base.cdmethode, 5, '0') || lpad(base.cdstationmesureeauxsurface, 8, '0')) AS "ID",
     sta.clean(par.libellelong) || ' at ' || sta.clean(sta.libellestation) || ' with method ' || sta.clean(mana.nom) AS "DESCRIPTION",
     'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement' AS "OBSERVATION_TYPE",
-    sta.make_time(base.mindateprel::text, base.minheureprel::text) AS "PHENOMENON_TIME_START",
-    sta.make_time(base.maxdateprel::text, base.maxheureprel::text) AS "PHENOMENON_TIME_END",
+    sta.make_time(base.mindateprel, base.minheureprel)::date AS "PHENOMENON_TIME_START",
+    sta.make_time(base.maxdateprel, base.maxheureprel)::date AS "PHENOMENON_TIME_END",
     base.cdmethode::bigint AS "SENSOR_ID",
     base.cdparametre::bigint AS "OBS_PROPERTY_ID",
-    base.cdstationmesureeauxsurface AS "THING_ID",
+    sta.numeric_id_thing(base.cdstationmesureeauxsurface) AS "THING_ID",
     unite.symbole AS "UNIT_NAME",
     unite.symbole AS "UNIT_SYMBOL",
     'http://id.eaufrance.fr/urf/' || base.cdunitemesure AS "UNIT_DEFINITION",
@@ -22,4 +22,4 @@ CREATE MATERIALIZED VIEW sta."CE_DATASTREAMS" AS
      LEFT JOIN referentiel.unite ON unite.code = base.cdunitemesure
      LEFT JOIN referentiel.methode mana ON mana.code = base.cdmethode
      LEFT JOIN referentiel.parametre par ON base.cdparametre = par.code
-   where not base.mindateprel is null;
+where not base.mindateprel is null;
