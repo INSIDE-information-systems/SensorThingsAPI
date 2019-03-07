@@ -16,6 +16,21 @@ CREATE INDEX location_ids_strid
   USING btree
   (str_id COLLATE pg_catalog."default");
 
+CREATE OR REPLACE FUNCTION sta.numeric_id_location(id_text text)
+ RETURNS bigint
+ LANGUAGE plpgsql
+AS $function$ 	
+	declare id_number int8;
+	begin
+		select nr_id into id_number from sta.location_ids where str_id=id_text;
+		IF NOT FOUND THEN
+    		insert into sta.location_ids (str_id) values (id_text) returning nr_id into id_number;
+		END IF;
+		return id_number;
+	end
+ $function$
+;
+
 
 --------------
 --- THINGS ---
@@ -34,6 +49,21 @@ CREATE INDEX thing_ids_strid
   ON sta.thing_ids
   USING btree
   (str_id COLLATE pg_catalog."default");
+
+CREATE OR REPLACE FUNCTION sta.numeric_id_thing(id_text text)
+ RETURNS bigint
+ LANGUAGE plpgsql
+AS $function$ 	
+	declare id_number int8;
+	begin
+		select nr_id into id_number from sta.thing_ids where str_id=id_text;
+		IF NOT FOUND THEN
+    		insert into sta.thing_ids (str_id) values (id_text) returning nr_id into id_number;
+		END IF;
+		return id_number;
+	end
+ $function$
+;
 
 
 ---------------
@@ -68,6 +98,21 @@ CREATE INDEX datastream_ids_strid
   USING btree
   (str_id COLLATE pg_catalog."default");
 
+CREATE OR REPLACE FUNCTION sta.numeric_id_datastream(id_text text)
+ RETURNS bigint
+ LANGUAGE plpgsql
+AS $function$ 	
+	declare id_number int8;
+	begin
+		select nr_id into id_number from sta.datastream_ids where str_id=id_text;
+		IF NOT FOUND THEN
+    		insert into sta.datastream_ids (str_id) values (id_text) returning nr_id into id_number;
+		END IF;
+		return id_number;
+	end
+ $function$
+;
+
 
 ----------------
 --- FEATURES ---
@@ -88,9 +133,26 @@ CREATE INDEX feature_ids_strid
   (str_id COLLATE pg_catalog."default");
 
 
+CREATE OR REPLACE FUNCTION sta.numeric_id_feature(id_text text)
+ RETURNS bigint
+ LANGUAGE plpgsql
+AS $function$ 	
+	declare id_number int8;
+	begin
+		select nr_id into id_number from sta.feature_ids where str_id=id_text;
+		IF NOT FOUND THEN
+    		insert into sta.feature_ids (str_id) values (id_text) returning nr_id into id_number;
+		END IF;
+		return id_number;
+	end
+ $function$
+;
+
+
 --------------------
 --- OBSERVATIONS ---
 --------------------
 
 -- Observations already have numeric IDs
+
 
