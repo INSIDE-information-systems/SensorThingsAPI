@@ -50,9 +50,7 @@ create table sta.thing_ids (
 --select "ID" from sta."THINGS";
 
 CREATE INDEX thing_ids_strid
-  ON sta.thing_ids
-  USING btree
-  (str_id COLLATE pg_catalog."default");
+  ON sta.thing_ids(str_id);
 
 CREATE OR REPLACE FUNCTION sta.numeric_id_thing(id_text text)
  RETURNS bigint
@@ -99,9 +97,7 @@ create table sta.datastream_ids (
 --select "ID" from sta."DATASTREAMS";
 
 CREATE INDEX datastream_ids_strid
-  ON sta.datastream_ids
-  USING btree
-  (str_id COLLATE pg_catalog."default");
+  ON sta.datastream_ids(str_id);
 
 CREATE OR REPLACE FUNCTION sta.numeric_id_datastream(id_text text)
  RETURNS bigint
@@ -134,9 +130,7 @@ create table sta.feature_ids (
 --select "ID" from sta."FEATURES";
 
 CREATE INDEX feature_ids_strid
-  ON sta.feature_ids
-  USING btree
-  (str_id COLLATE pg_catalog."default");
+  ON sta.feature_ids(str_id);
 
 
 CREATE OR REPLACE FUNCTION sta.numeric_id_feature(id_text text)
