@@ -1,6 +1,9 @@
 -----------------
 --- LOCATIONS ---
 -----------------
+-- KS: Superfluous, as LOCATIONS:THINGS are 1:1, thus always been reusing the same base tables for both
+-----------------
+
 
 drop table if exists sta.location_ids;
 create table sta.location_ids (
