@@ -128,7 +128,7 @@ AS $function$
 				outstr = outstr || '},';
 		END IF;		
 		IF (NOT codeoperationcep ISNULL) 
-			THEN outstr = outstr || '"relatedSF": "/Features('|| sta.numeric_id_feature(codeoperationcep) || ')",';
+			THEN outstr = outstr || '"relatedSF": "/Features('|| sta.numeric_id_feature(codeoperationcep)::text || ')",';
 		END IF;		
 		
 		outstr = rtrim(outstr, ',') || '}';
