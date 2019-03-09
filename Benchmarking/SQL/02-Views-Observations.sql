@@ -3,7 +3,7 @@
 DROP MATERIALIZED VIEW sta."OBSERVATIONS";
 
 CREATE MATERIALIZED VIEW sta."OBSERVATIONS" AS 
- SELECT sta.numeric_id_obs(obs.id)::bigint AS "ID",
+ SELECT sta.numeric_id_obs(obs.id::text)::bigint AS "ID",
 		sta.make_time(obs.dateprel, obs.heureprel)::date AS "PHENOMENON_TIME_START",
 		
 		CASE
