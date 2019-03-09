@@ -3,12 +3,12 @@
 ---------------------
 
 CREATE OR REPLACE FUNCTION sta.make_time(dt date, tm time without time zone)
- RETURNS text
+ RETURNS timestamp with time zone
  LANGUAGE plpgsql
 AS $function$
 begin
-	IF (tm ISNULL) THEN return dt || ' 12:00:00'; END IF;
-	return dt || ' ' || tm;
+	IF (tm ISNULL) THEN return (dt || ' 12:00:00')::timestamp with time zone; END IF;
+	return (dt || ' ' || tm)::timestamp with time zone;
 END
 $function$
 ;
