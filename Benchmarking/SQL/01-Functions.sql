@@ -128,7 +128,7 @@ AS $function$
 				outstr = outstr || '},';
 		END IF;		
 		IF (NOT codeoperationcep ISNULL) 
-			THEN outstr = outstr || '"relatedSF": "/Features('|| sta.numeric_id_feature(codeoperationcep)::text || ')",';
+			THEN outstr = outstr || '"related.Features@iot.navigationLink": "Features('|| sta.numeric_id_feature(codeoperationcep)::text || ')",';
 		END IF;		
 		
 		outstr = rtrim(outstr, ',') || '}';
@@ -136,6 +136,7 @@ AS $function$
 	END
 $function$
 ;
+
 									 
 --------------------
 --- sta.obs_param ---
