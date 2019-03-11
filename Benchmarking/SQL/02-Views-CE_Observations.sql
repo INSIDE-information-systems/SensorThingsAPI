@@ -1,3 +1,5 @@
+DROP MATERIALIZED VIEW sta."CE_OBSERVATIONS";
+
 CREATE MATERIALIZED VIEW sta."CE_OBSERVATIONS"
 AS SELECT sta.numeric_id_obs('CE_'::text || obs.id) AS "ID",
     (obs.dateprel || ' 12:00:00'::text)::timestamp with time zone AS "PHENOMENON_TIME_START",
@@ -7,7 +9,7 @@ AS SELECT sta.numeric_id_obs('CE_'::text || obs.id) AS "ID",
             ELSE sta.make_time(obs.dateparenv, obs.heureparenv)
         END AS "RESULT_TIME",
     regexp_replace(obs.rsparenv::text, '\,'::text, '.'::text)::double precision AS "RESULT_NUMBER",
-    obs.rsparenv::text AS "RESULT_STRING",
+    regexp_replace(obs.rsparenv::text, '\,'::text, '.'::text)::text AS "RESULT_STRING",
     ((((((((((('[{ "nameOfMeasure": "DQ_Status", "DQ_Result": { "code": "http://id.eaufrance.fr/nsa/446#'::text || obs.statutparen::text) || '", "label": "'::text) || stat.mnemo::text) || '", "comment": "'::text) || stat.libelle::text) || '"} }, { "nameOfMeasure": "DQ_Qualification", "DQ_Result": { "code": "http://id.eaufrance.fr/nsa/414#'::text) || obs.qualparenv::text) || '", "label": "'::text) || qual.mnemo::text) || '", "comment": "'::text) || qual.libelle::text) || '" } } ]'::text AS "RESULT_QUALITY",
     NULL::timestamp with time zone AS "VALID_TIME_START",
     NULL::timestamp with time zone AS "VALID_TIME_END",
