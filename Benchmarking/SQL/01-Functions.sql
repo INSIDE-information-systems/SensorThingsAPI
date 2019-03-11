@@ -256,7 +256,7 @@ BEGIN
       FETCH cur INTO net, netlib;
 			EXIT WHEN NOT FOUND;
 			--raise notice 'sta (%) net: (%)', stat, net;
-			outstr = outstr || '{ "code": "'  || net || '", "libelle": "' || netlib ||'"},';
+			outstr = outstr || '{ "code": "'  || net || '", "libelle": "' || sta.clean(netlib) ||'"},';
 			--raise notice 'outstr (%)', outstr;
     END LOOP;
 		CLOSE cur;
