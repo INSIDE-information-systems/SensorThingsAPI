@@ -7,7 +7,7 @@ DROP MATERIALIZED VIEW sta."LOCATIONS";
 CREATE MATERIALIZED VIEW sta."LOCATIONS"
 AS SELECT sta.numeric_id_thing(stat.codestation) AS "ID",
     sta.clean(stat.libellestation) AS "DESCRIPTION",
-    'application/vnd.geo+json'::text AS "ENCODING_TYPE",
+    'application/geo+json'::text AS "ENCODING_TYPE",
     '{"type":"Point","coordinates":[' || stat.longitude || ',' || stat.latitude || ']}' AS "LOCATION",
     st_geomfromtext('POINT(' || stat.longitude || ' ' || stat.latitude || ')') AS "GEOM",
     sta.clean(stat.libellestation) AS "NAME",

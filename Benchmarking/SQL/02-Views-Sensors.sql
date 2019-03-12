@@ -6,7 +6,7 @@ DROP MATERIALIZED VIEW sta."SENSORS";
 CREATE MATERIALIZED VIEW sta."SENSORS" AS 
  SELECT base.meth::bigint AS "ID",
     sta.clean(mana.nom) AS "DESCRIPTION",
-    'application/vnd.geo+json'::text AS "ENCODING_TYPE",
+    'application/geo+json'::text AS "ENCODING_TYPE",
     sta.clean(mana.nom) AS "METADATA",
     sta.clean(mana.nom) AS "NAME",
     '{"namespace": "Sandre", "type":"INSPIRE", "responsibleParty":{"organisationName": "Sandre"}}' AS "PROPERTIES"
@@ -17,7 +17,7 @@ union
 select
 	9999::int8 as "ID",
 	'Unknown'::text as "DESCRIPTION",
-	'application/vnd.geo+json'::text as "ENCODING",
+	'application/geo+json'::text as "ENCODING",
 	'Unknown'::text as "METADATA",
 	'Unknown'::text as "NAME",
 	null::text as "PROPERTIES";
