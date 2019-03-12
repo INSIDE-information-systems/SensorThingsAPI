@@ -3,7 +3,9 @@ DROP MATERIALIZED VIEW sta.dsbase cascade;
 
 CREATE MATERIALIZED VIEW sta.dsbase
 AS SELECT pc.cdstationmesureeauxsurface,
-    pc.cdmethana,
+	case 
+		when pc.cdmethana is null then '9999'
+		else pc.cdmethana end as cdmethana,
     pc.cdparametre,
     pc.cdsupport,
     pc.cdfractionanalysee,
@@ -18,7 +20,7 @@ AS SELECT pc.cdstationmesureeauxsurface,
     max(pc.heureana) AS maxheureana
    FROM physicochimie.analyse_physicochimie pc
    WHERE NOT pc.cdprelevement is NULL
-  GROUP BY pc.cdstationmesureeauxsurface, pc.cdmethana, pc.cdparametre, pc.cdsupport, pc.cdfractionanalysee, pc.cdunitemesure;
+GROUP BY pc.cdstationmesureeauxsurface, pc.cdmethana, pc.cdparametre, pc.cdsupport, pc.cdfractionanalysee, pc.cdunitemesure;
 
 -- base view for the creation of FEATURES
 DROP MATERIALIZED VIEW sta.foibase cascade;
