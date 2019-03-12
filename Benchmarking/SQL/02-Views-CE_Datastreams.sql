@@ -1,5 +1,6 @@
--- drop MATERIALIZED VIEW sta."CE_DATASTREAMS";
+-- Materialized View: sta."CE_DATASTREAMS"
 
+drop MATERIALIZED VIEW sta."CE_DATASTREAMS";
 
 CREATE MATERIALIZED VIEW sta."CE_DATASTREAMS" AS 
  SELECT sta.numeric_id_datastream(lpad(base.cdunitemesure, 5, '0') || 
@@ -8,7 +9,7 @@ CREATE MATERIALIZED VIEW sta."CE_DATASTREAMS" AS
     'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement' AS "OBSERVATION_TYPE",
     sta.make_time(base.mindateprel, base.minheureprel)::timestamp with time zone AS "PHENOMENON_TIME_START",
     sta.make_time(base.maxdateprel, base.maxheureprel)::timestamp with time zone AS "PHENOMENON_TIME_END",
-    base.cdmethode::bigint AS "SENSOR_ID",
+    COALESCE(base.cdmethode::bigint, -1::bigint) AS "SENSOR_ID",
     base.cdparametre::bigint AS "OBS_PROPERTY_ID",
     sta.numeric_id_thing(base.cdstationmesureeauxsurface) AS "THING_ID",
     unite.symbole AS "UNIT_NAME",
