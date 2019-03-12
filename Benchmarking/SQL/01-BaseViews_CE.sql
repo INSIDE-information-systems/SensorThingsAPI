@@ -3,7 +3,7 @@ DROP MATERIALIZED VIEW sta.ce_dsbase cascade;
 
 CREATE MATERIALIZED VIEW sta.ce_dsbase
 AS SELECT ce.cdstationmesureeauxsurface,
-    COALESCE(ce.cdmethode, '0'::character varying) as cdmethode
+    COALESCE(ce.cdmethode, '0'::character varying) as cdmethode,
     ce.cdparametre,
     ce.cdunitemesure,
     min(ce.dateprel) AS mindateprel,
