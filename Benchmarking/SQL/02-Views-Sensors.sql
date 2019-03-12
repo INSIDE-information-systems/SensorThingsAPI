@@ -15,7 +15,7 @@ CREATE MATERIALIZED VIEW sta."SENSORS" AS
 WHERE base.meth IS NOT null
 union
 select
-	9999::int8 as "ID",
+	-1::int8 as "ID",
 	'Unknown'::text as "DESCRIPTION",
 	'application/geo+json'::text as "ENCODING",
 	'Unknown'::text as "METADATA",
