@@ -9,7 +9,7 @@ CREATE MATERIALIZED VIEW sta."DATASTREAMS" AS
     'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement' AS "OBSERVATION_TYPE",
     sta.make_time(base.mindateprel, base.minheureprel) AS "PHENOMENON_TIME_START",
     sta.make_time(base.maxdateprel, base.maxheureprel) AS "PHENOMENON_TIME_END",
-    COALESCE(base.cdmethana::bigint, 0::bigint) AS "SENSOR_ID",
+    base.cdmethana::bigint AS "SENSOR_ID",
     base.cdparametre::bigint AS "OBS_PROPERTY_ID",
     sta.numeric_id_thing(base.cdstationmesureeauxsurface) AS "THING_ID",
     unite.symbole AS "UNIT_NAME",
