@@ -3,9 +3,7 @@ DROP MATERIALIZED VIEW sta.dsbase cascade;
 
 CREATE MATERIALIZED VIEW sta.dsbase
 AS SELECT pc.cdstationmesureeauxsurface,
-	case 
-		when pc.cdmethana is null then '9999'
-		else pc.cdmethana end as cdmethana,
+	COALESCE(pc.cdmethana, '-1') as cdmethana,
     pc.cdparametre,
     pc.cdsupport,
     pc.cdfractionanalysee,
