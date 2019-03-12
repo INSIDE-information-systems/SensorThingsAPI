@@ -3,7 +3,7 @@ DROP MATERIALIZED VIEW sta.dsbase cascade;
 
 CREATE MATERIALIZED VIEW sta.dsbase
 AS SELECT pc.cdstationmesureeauxsurface,
-	COALESCE(pc.cdmethana, '-1') as cdmethana,
+	COALESCE(pc.cdmethana, '0') as cdmethana,
     pc.cdparametre,
     pc.cdsupport,
     pc.cdfractionanalysee,
