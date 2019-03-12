@@ -14,7 +14,7 @@ AS SELECT sta.numeric_id_obs('CE_'::text || obs.id) AS "ID",
     NULL::timestamp with time zone AS "VALID_TIME_START",
     NULL::timestamp with time zone AS "VALID_TIME_END",
     NULL::text AS "PARAMETERS",
-    sta.numeric_id_datastream(((lpad(obs.cdunitemesure::text, 5, '0'::text) || lpad(obs.cdparametre::text, 5, '0'::text)) || lpad(obs.cdmethode::text, 5, '0'::text)) || lpad(obs.cdstationmesureeauxsurface::text, 8, '0'::text)) AS "DATASTREAM_ID",
+    sta.numeric_id_datastream(((lpad(obs.cdunitemesure::text, 5, '0'::text) || lpad(obs.cdparametre::text, 5, '0'::text)) || lpad(COALESCE(obs.cdmethode, '0'::character varying)::text, 5, '0'::text)) || lpad(obs.cdstationmesureeauxsurface::text, 8, '0'::text)) AS "DATASTREAM_ID",
     sta.numeric_id_feature('CE_'::text || obs.codeoperationcep::text) AS "FEATURE_ID",
     0 AS "RESULT_TYPE",
     NULL::text AS "RESULT_JSON",
@@ -24,3 +24,4 @@ AS SELECT sta.numeric_id_obs('CE_'::text || obs.id) AS "ID",
      LEFT JOIN referentiel.statut_analyse stat ON obs.statutparen::text = stat.code::text
      LEFT JOIN referentiel.qualification qual ON obs.qualparenv::text = qual.code::text
   WHERE obs.cdprelevement IS NOT NULL;
+
