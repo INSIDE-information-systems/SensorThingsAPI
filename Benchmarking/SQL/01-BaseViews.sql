@@ -18,7 +18,7 @@ AS SELECT pc.cdstationmesureeauxsurface,
     max(pc.heureana) AS maxheureana
    FROM physicochimie.analyse_physicochimie pc
    WHERE NOT pc.cdprelevement is NULL
-GROUP BY pc.cdstationmesureeauxsurface, pc.cdmethana, pc.cdparametre, pc.cdsupport, pc.cdfractionanalysee, pc.cdunitemesure;
+GROUP BY pc.cdstationmesureeauxsurface, COALESCE(pc.cdmethana, '0'), pc.cdparametre, pc.cdsupport, pc.cdfractionanalysee, pc.cdunitemesure;
 
 -- base view for the creation of FEATURES
 DROP MATERIALIZED VIEW sta.foibase cascade;
