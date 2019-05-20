@@ -35,7 +35,7 @@
           </elementProp>
           <elementProp name="Time1Start" elementType="Argument">
             <stringProp name="Argument.name">Time1Start</stringProp>
-            <stringProp name="Argument.value">1985-01-01T00:00:00.000Z</stringProp>
+            <stringProp name="Argument.value">2006-01-01T00:00:00.000Z</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="Time1End" elementType="Argument">
@@ -70,7 +70,7 @@
           </elementProp>
           <elementProp name="DqResultCode1" elementType="Argument">
             <stringProp name="Argument.name">DqResultCode1</stringProp>
-            <stringProp name="Argument.value">http://id.eaufrance.fr/nsa/446%403</stringProp>
+            <stringProp name="Argument.value">http://id.eaufrance.fr/nsa/446%232</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="pathDepartmentId" elementType="Argument">
@@ -90,7 +90,7 @@
           </elementProp>
           <elementProp name="pathDqResultCode" elementType="Argument">
             <stringProp name="Argument.name">pathDqResultCode</stringProp>
-            <stringProp name="Argument.value">resultQuality/DQ_Result/code</stringProp>
+            <stringProp name="Argument.value">resultQuality[0]/DQ_Result/code</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="pos1Lon" elementType="Argument">
