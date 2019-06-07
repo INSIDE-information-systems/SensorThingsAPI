@@ -21,9 +21,9 @@ https://wg-brgm.docker01.ilt-dmz.iosb.fraunhofer.de/servlet/is/101/
 - Station La Dordogne à Cenac: http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things(11949)
 - All Datastreams for this Station: http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things(11949)/Datastreams
 - All Datastreams measuring Nitrates for this station:
-  - [By ObservedProperty id](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/id+eq+1340)
-  - [By ObservedProperty name](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/name+eq+'Nitrates')
-  - [By ObservedProperty definition](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/definition+eq+'http://id.eaufrance.fr/par/Nitrates')
+  - By ObservedProperty id: http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/id+eq+1340
+  - By ObservedProperty name : http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/name+eq+'Nitrates'
+  - By ObservedProperty definition http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/definition+eq+'http://id.eaufrance.fr/par/Nitrates'
 - Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode inconnue:
   [Direct Link](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Datastreams%286024103%29/Observations)
 - Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode spécifique:
