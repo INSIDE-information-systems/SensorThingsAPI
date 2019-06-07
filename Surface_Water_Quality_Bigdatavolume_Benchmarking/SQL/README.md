@@ -65,3 +65,24 @@ From these materialized views, the data is copied into FROST tables(04-CopyData.
 - added URI prefixes all over
 - added insituana to OBS, also fixed (fixing) Phenomenon-time-end
 
+
+## Added indices
+
+On the Observations table:
+```
+CREATE INDEX "observations-ds_id-phen_time_se" ON "OBSERVATIONS" USING btree ("DATASTREAM_ID", "PHENOMENON_TIME_START" DESC, "PHENOMENON_TIME_END" DESC);
+
+CREATE INDEX "observations-ds_id-phen_time_se-result_nr" ON "OBSERVATIONS" USING btree ("DATASTREAM_ID", "PHENOMENON_TIME_START" DESC, "PHENOMENON_TIME_END" DESC, "RESULT_NUMBER");
+
+CREATE INDEX "observations-phen_time_se" ON "OBSERVATIONS" USING btree ("PHENOMENON_TIME_START" DESC, "PHENOMENON_TIME_END" DESC);
+```
+
+On the Datastreams table:
+```
+CREATE INDEX datastreams_obsprop_id_phentimese ON sensorthingswq."DATASTREAMS" USING btree ("OBS_PROPERTY_ID", "PHENOMENON_TIME_START", "PHENOMENON_TIME_END");
+
+CREATE INDEX datastreams_phentimese ON sensorthingswq."DATASTREAMS" USING btree ("PHENOMENON_TIME_START", "PHENOMENON_TIME_END");
+
+CREATE INDEX datastreams_thing_id_phentimese ON sensorthingswq."DATASTREAMS" USING btree ("THING_ID", "PHENOMENON_TIME_START", "PHENOMENON_TIME_END");
+```
+
