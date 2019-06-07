@@ -32,10 +32,6 @@ https://wg-brgm.docker01.ilt-dmz.iosb.fraunhofer.de/servlet/is/101/
   [Direct Link](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Datastreams%286024434%29/Observations)
 - Measurement of Nitrites in Eau on Eau brute at La Dordogne à Cenac with method Méthode inconnue:
   [Direct Link](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Datastreams%286024102%29/Observations)
-- Measurement of Nitrites in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode inconnue:
-  No such Datastream
-- Measurement of Nitrites in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Qualité de l'eau - Détermination de paramètres sélectionnés par des systèmes d'analyse discrète - Partie 1 : ammonium, nitrate, nitrite, chlorure, orthophosphate, sulfate et silicate par détection photométrique (NF ISO 15923-1 Janvier 2014 ):
-  No such Datastream
 
 ## wiki
 More example will be added there
