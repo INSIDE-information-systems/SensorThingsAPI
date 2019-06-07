@@ -18,12 +18,25 @@ https://wg-brgm.docker01.ilt-dmz.iosb.fraunhofer.de/servlet/is/101/
 
 # API querying
 ## Nice example for time series:
-- Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode inconnue
-- Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode spécifique
-- Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Qualité de l'eau - Dosage des ions fluorure,chlorure,nitrite,orthophosphate,bromure,nitrate et sulfate dissous,par chromatographie des ions en phase liquide - Partie 1: méthode applicable pour les eaux faiblement contaminées (NF EN ISO 10304-1 -Juin 1995)
-- Measurement of Nitrites in Eau on Eau brute at La Dordogne à Cenac with method Méthode inconnue
-- Measurement of Nitrites in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode inconnue
-- Measurement of Nitrites in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Qualité de l'eau - Détermination de paramètres sélectionnés par des systèmes d'analyse discrète - Partie 1 : ammonium, nitrate, nitrite, chlorure, orthophosphate, sulfate et silicate par détection photométrique (NF ISO 15923-1 Janvier 2014 )
+- Station La Dordogne à Cenac: http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things(11949)
+- All Datastreams for this Station: http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things(11949)/Datastreams
+- All Datastreams measuring Nitrates for this station:
+  - [By ObservedProperty id](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/id+eq+1340)
+  - [By ObservedProperty name](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/name+eq+'Nitrates')
+  - [By ObservedProperty definition](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Things%2811949%29/Datastreams?$filter=ObservedProperties/definition+eq+'http://id.eaufrance.fr/par/Nitrates')
+- Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode inconnue:
+  [Direct Link](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Datastreams%286024103%29/Observations)
+- Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode spécifique:
+  [Direct Link](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Datastreams%286024442%29/Observations)
+- Measurement of Nitrates in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Qualité de l'eau - Dosage des ions fluorure,chlorure,nitrite,orthophosphate,bromure,nitrate et sulfate dissous,par chromatographie des ions en phase liquide - Partie 1: méthode applicable pour les eaux faiblement contaminées (NF EN ISO 10304-1 -Juin 1995):
+  [Direct Link](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Datastreams%286024434%29/Observations)
+- Measurement of Nitrites in Eau on Eau brute at La Dordogne à Cenac with method Méthode inconnue:
+  [Direct Link](http://sensorthings-wq.brgm-rec.fr/FROST-Server/v1.0/Datastreams%286024102%29/Observations)
+- Measurement of Nitrites in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Méthode inconnue:
+  No such Datastream
+- Measurement of Nitrites in Eau on Phase aqueuse de l'eau (filtrée, centrifugée...) at La Dordogne à Cenac with method Qualité de l'eau - Détermination de paramètres sélectionnés par des systèmes d'analyse discrète - Partie 1 : ammonium, nitrate, nitrite, chlorure, orthophosphate, sulfate et silicate par détection photométrique (NF ISO 15923-1 Janvier 2014 ):
+  No such Datastream
+
 ## wiki
 More example will be added there
 
