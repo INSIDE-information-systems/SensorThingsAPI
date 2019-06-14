@@ -1,0 +1,36 @@
+Label,# Samples,Average,Median,90% Line,95% Line,99% Line,Min,Max,Error %,Throughput,Received KB/sec,Sent KB/sec
+Flat Things; No Filter,10,112,101,150,150,163,85,163,0.000%,.06418,9.97,0.02
+"Flat Things; No Filter; Select name,id",10,20,20,23,23,26,16,26,0.000%,.06424,0.49,0.02
+"Flat Things; No Filter; Select name,id; Skip 10000",10,26,23,29,29,49,18,49,0.000%,.06424,0.54,0.02
+Flat Things; Top; No Filter,10,28,25,39,39,47,19,47,0.000%,.06425,4.75,0.02
+Flat Things; Top; No Filter; Count,10,37,33,51,51,58,29,58,0.000%,.06425,4.75,0.02
+Flat Things; Top; Filter 1StationCode;,10,23,20,30,30,32,16,32,0.000%,.06426,0.17,0.03
+"Flat Things; Top; Filter DSTime, 2DepId",10,779,810,1037,1037,1100,457,1100,0.000%,.06385,5.91,0.06
+"Flat Things; Top; Filter DSTime, 2DepId; Count",10,593,587,618,618,624,557,624,0.000%,.06406,5.93,0.06
+"Flat Things; Top; Filter DSTime, 2DepId; Order StationCode",10,541,512,519,519,824,498,824,0.000%,.06409,6.37,0.06
+"Flat Things; Top; Filter DSTime, 1DepId, ResultCode;",10,6682,4804,6107,6107,22146,4685,22146,0.000%,.06236,5.31,0.06
+"Flat Things; Top; Filter DSTime, 2RivBasId;",10,1018,929,1204,1204,1514,893,1514,0.000%,.07187,8.02,0.06
+"Flat Things; Top; Filter DSTime, 2RivBasId; Order StationCode",10,922,916,944,944,945,883,945,0.000%,.07190,8.00,0.07
+"Flat Things; Top; Filter DSTime, 2StationCode",10,52,51,61,61,69,29,69,0.000%,.07236,0.22,0.05
+"Flat Things; Top; Filter DSTime, 1ObsProp",10,277,161,464,464,736,139,736,0.000%,.07226,6.90,0.04
+"Flat Things; Top; Filter DSTime, 1ObsProp; Select",10,326,168,489,489,1024,125,1024,0.000%,.07256,4.83,0.05
+"Flat Things; Top; Filter DSTime, 1ObsProp; Select; Count",10,372,190,516,516,1088,162,1088,0.000%,.07273,4.84,0.05
+"Flat Things; Top; Filter DSTime, 2DepId, 1ObsPropId",10,115,102,155,155,177,77,177,0.000%,.07295,6.22,0.07
+"Flat Things; Top; Filter DSTime, 2DepId, 1ObsPropId; Count",10,186,153,255,255,274,122,274,0.000%,.07294,6.23,0.07
+Flat Things; Top; Filter BBox,10,87,65,110,110,238,47,238,0.000%,.07300,5.81,0.04
+Flat Things; Top; Filter BBox; Count,10,93,79,124,124,132,67,132,0.000%,.07309,5.82,0.04
+Flat ObservedProperties; Filter ThingId,10,22,23,24,24,32,17,32,0.000%,.07313,1.56,0.03
+Flat ObservedProperties; Filter ThingName,10,29,29,35,35,38,21,38,0.000%,.07313,1.57,0.04
+Flat ObservedProperties; Filter 1StationCode,10,98,70,139,139,188,58,188,0.000%,.07312,1.56,0.03
+Flat ObservedProperties; Filter ThingId; Select,10,28,19,26,26,122,12,122,0.000%,.07321,0.52,0.04
+Flat Features; Filter ThingId,10,88,94,115,115,116,53,116,0.000%,.07323,0.65,0.03
+Flat Features; Filter ThingName,10,90,98,120,120,123,55,123,0.000%,.07322,0.66,0.04
+Flat Features; Filter 1StationCode,10,3890,3241,3407,3407,9972,2767,9972,0.000%,.07156,0.64,0.04
+Flat Features; Filter ThingId; Select,10,88,83,101,101,122,70,122,0.000%,.07700,0.53,0.04
+"Flat Observations; Filter 1StationCode, 1ObsProp",10,33,29,49,49,55,24,55,0.000%,.07704,0.49,0.05
+"Datastreams+Observations; Filter 1StationCode, 1ObsProp",10,41,34,60,60,61,27,61,0.000%,.07706,0.73,0.04
+"Datastreams+Observations; Filter 1ThingId, 1ObsProp",10,60,57,62,62,110,35,110,0.000%,.07707,0.73,0.04
+"Datastreams+Observations; Filter 1StationCode, 1ObsProp; Select",10,61,59,70,70,103,35,103,0.000%,.07709,0.64,0.06
+"Datastreams+Observations; Filter 1StationCode, 1ObsProp, (1Phentime)",10,46,41,65,65,73,31,73,0.000%,.07710,0.74,0.05
+"Datastreams+Observations; Filter 1StationCode, 1ObsProp, (1YearPhentime)",10,43,31,68,68,89,27,89,0.000%,.07712,0.23,0.05
+TOTAL,340,497,77,932,3201,5039,12,22146,0.000%,2.00409,95.93,1.24
