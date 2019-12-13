@@ -16,8 +16,7 @@ Tricky parts are how to handle:
 
 - the "properties" field: This is a complex property with an unknown set of fields.
   The only way to deal with this is to include the JSON as is.
-  Proper encoding to CSV needs to happen, since JSON contains both double quotes and commas, same as CSV, but this is covered by RFC 4180 (https://tools.ietf.org/html/rfc4180).
-  Double quotes are quoted with a double quote.
+  Proper encoding to CSV needs to happen, since JSON contains both double quotes and commas, same as CSV, but this is covered by [RFC 4180](https://tools.ietf.org/html/rfc4180) which defines that double quotes are quoted with a double quote.
 - Datastream/unitOfMeasurement: This is a complex property with three defined fields. 
   The best way seems to be to split this field into three CSV columns: `unitOfMeasurement/name,unitOfMeasurement/symbol,unitOfMeasurement/definition`
 
@@ -60,20 +59,35 @@ In a CSV format, this will duplicate the row for the primary table, for each ite
 
 ### multiple expands with many cardinality
 
-There are three situations where an entity can have two expands with a cardinality of many: 
+There are three situations where an entity can have two or more expands with a cardinality of many: 
 
-1. `Things?$expand=Locations,Datastreams,HistoricalLocations`
-2. `Locations?$expand=Things,HistoricalLocations`
-3. `MultiDatastreams?$expand=ObservedProperties,Observations`
+1. `v1.1/Things?$expand=Locations,Datastreams,HistoricalLocations`
+2. `v1.1/Locations?$expand=Things,HistoricalLocations`
+3. `v1.1/MultiDatastreams?$expand=ObservedProperties,Observations`
 
-The Tasking Core specification adds TaskingCapabilities to Things, but this does not change much.
+The Tasking Core specification adds TaskingCapabilities to Things, which adds a fourth expand to Thing entities.
 
 Furthermore, these expands with cardinality many may appear begind other expands:
 
-    HistoricalLocations?$expand=Thing($expand=Locations,Datastreams)
+    v1.1/HistoricalLocations?$expand=Thing($expand=Locations,Datastreams)
 
 This would lead to very complex rules for defining what data should go in each row of the CSV output.
-Therefore it seems best to limit $expand to a single item with a cardinality of many, on the top-level only, unless the $expand has a `$top=1` parameter, turning it into an expand with a cardinality of 1. This to allow the fetching of Things, with Datastreams, and the main Location. Thus the HistoricalLocations example above is not allowed in the CSV resultFormat. (TODO: Specify error code)
+Therefore expands with a cardinality of many are restricted to a single chain.
+All other expands must be of cardinality one, or have a `$top=1` parameter, turning it into an expand with a cardinality of 1.
+Having a non-allowed set of expands will lead to a HTTP 400 Bad Request error.
+
+Allowed examples:
+
+    v1.1/Things?$expand=Datastreams
+    v1.1/Things?$expand=Datastreams($expand=Observations)
+    v1.1/Things?$expand=Datastreams($expand=ObservedProperty,Observations)
+    v1.1/Things?$expand=Datastreams,Locations($top=1)
+    v1.1/Datastreams?$expand=ObservedProperty,Observations($expand=FeatureOfInterest)
+
+Disallowed examples:
+
+    v1.1/Things?$expand=Datastreams,Locations
+    v1.1/Datastreams?$expand=Observations,Thing($expand=Locations)
 
 
 ## MultiDatastreams
@@ -81,11 +95,21 @@ Therefore it seems best to limit $expand to a single item with a cardinality of 
 MultiDatastreams bring their own set of complications:
 
 - `MultiDatastreams/unitsOfMeasurement` is an array of objects, each with 3 fields
+- `MultiDatastreams/multiObservationDataTypes` is an array of strings
 - `MultiDatastreams/ObservedProperties` is a navigationList with cardinality many
 - `MultiDatastreams/Observations/result` is an array
 
-These three arrays/lists are of the same length for any given MultiDatastream, but may be of different length for the next MultiDatastream.
+These four arrays/lists are of the same length for any given MultiDatastream, but may be of different length for the next MultiDatastream.
 Furthermore, the order of the items in these lists is important.
+
+Options for dealing with MultiDatastreams are:
+
+- Not allow MultiDatastreams in the CSV resultFormat (avoids the problem)
+- Encoding the unitsOfMeasurement, multiObservationDataTypes, ObservedProperties and Observations/result sets as json arrays in a single CSV line
+- Returning a line for each entry in unitsOfMeasurement, multiObservationDataTypes, ObservedProperties and Observations/result
+
+The last option essentially breaks Observations of a MultiDatastream back into normal Observations.
+
 
 
 
