@@ -3,15 +3,15 @@
 We need a way to link between various objects, internal and external. 
 Since the SensorThings API v1.x does not have special fields for links, the links will have to go in the properties field that each entity type has.
 
-## Internal
+## Internal links
 
-Optimally, internal links are formatted in a way that FROST can easily detect the links. This makes it possible for FROST to generate absolute URLs 
-for these links, and allow searching and expanding of the links.
-
-Internal links need:
+To be funktional, internal links need:
 - The entity id of the target entity
 - The entity type of the target entity
 - The name of the link
+
+Furthermore, they need to be formatted in a way that the server can easily detect the links.
+This makes it possible for FROST to generate absolute URLs for these links, and allow searching and expanding of the links.
 
 ### Using special property names
 
@@ -23,12 +23,12 @@ The SensorThings API uses a special @ notation for internal properties:
 
 We could introduce something similar. When linking to another Entitiy, add an entry to the properties map like:
 
-    "linkName@<Target Type>.iot.id": <Target Entity Id>
+    "<linkName>@<Target Type>.iot.id": <Target Entity Id>
     "building@Thing.iot.id": 45
     "sensorType@Sensor.iot.id": 16
     "aggregateFor@Datastream.iot.id": "123e4567-e89b-12d3-a456-426655440000"
 
-The server could operate on these, for instance by adding a navigationLink when returning the properties:
+The server can operate on these, for instance by adding a navigationLink when returning the properties:
 
     GET v1.0/Things(1)
     {
@@ -38,7 +38,7 @@ The server could operate on these, for instance by adding a navigationLink when 
         }
     }
 
-The server could support $expand on these entities, and maybe $filter:
+The server can support $expand on these entities, including the full target entity next to the link:
 
     GET v1.0/Things(1)?$expand=properties/building
     {
@@ -48,6 +48,35 @@ The server could support $expand on these entities, and maybe $filter:
         }
     }
 
-Of course, when the server adds new data to the properties, care has to be taken when editing the Entitiy and storing it again, since that expanded entity or that navigationLink should not be pushed back into the properties field, though the server could detect the fact that there already is a property starting with `building@` and thus remove any other `building` properties.
+When updating or creating entities, if there is a property of the type `<linkName>@<Target Type>.iot.id` then the property `<linkName>` and all other properties starting with `<linkName>@` will be removed by the server before storing the properties.
+
+
+### Registering & announcing links
+
+The behaviour described above can be exposed by a server without the server knowing in advance which links exist.
+When formatting the results of a request, the server can iterate through the properties, and generate any required navigationLinks and expands.
+To enable efficient filtering on these properties, the server will need to know which links (may) exist before fetching data from the database.
+Pre-registering the existing links on the server will also allow the server to announce the existence of those links, and their semantics, to clients.
+It also makes it possible for the server to generate back-links from the entities that are linked to.
+
+Pre-registered links are announced in the `serverSettings` part of the server root document.
+
+    {
+      "serverSettings": {
+        "conformance": [
+          "<our requirement class uri>"
+        ],
+        "<our requirement class uri>": {
+          "registeredLinks": {
+            "<sourceType>/properties/<linkName>@<targetType>": "Description"
+          }
+        }
+      }
+    }
+
+By specifying the full path, links do not have to be top-level entries in the properties object, but can be nested deeper.
+For example: `"Thing/properties/links/building@Thing": "The building a room is part of."`
+
+
 
 
