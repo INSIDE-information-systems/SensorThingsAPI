@@ -57,7 +57,7 @@ The behaviour described above can be exposed by a server without the server know
 When formatting the results of a request, the server can iterate through the properties, and generate any required navigationLinks and expands.
 To enable efficient filtering on these properties, the server will need to know which links (may) exist before fetching data from the database.
 Pre-registering the existing links on the server will also allow the server to announce the existence of those links, and their semantics, to clients.
-It also makes it possible for the server to generate back-links from the entities that are linked to.
+It also makes it possible for the server to generate back-links from the entities that are linked to, but the details for that still need to be specified.
 
 Pre-registered links are announced in the `serverSettings` part of the server root document.
 
@@ -68,7 +68,10 @@ Pre-registered links are announced in the `serverSettings` part of the server ro
         ],
         "<our requirement class uri>": {
           "registeredLinks": {
-            "<sourceType>/properties/<linkName>@<targetType>": "Description"
+            "<sourceType>/properties/<linkName>": {
+              "targetType": "<targetType>",
+              "description": "A human readable description of the link"
+            }
           }
         }
       }
@@ -76,6 +79,12 @@ Pre-registered links are announced in the `serverSettings` part of the server ro
 
 By specifying the full path, links do not have to be top-level entries in the properties object, but can be nested deeper.
 For example: `"Thing/properties/links/building@Thing": "The building a room is part of."`
+
+## Open issues
+
+Some things are not specified yet and are in need of discussion:
+
+- Cardinality many-to-many: 
 
 
 

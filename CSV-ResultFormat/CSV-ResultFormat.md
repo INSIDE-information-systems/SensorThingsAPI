@@ -26,7 +26,7 @@ For example:
     1,My Datastream,degree celcius,°C,ucum:Cel
     2,My other Datastream,degree celcius,°C,ucum:Cel
 
-The format returned when fetching a list of entities, or a single entitiy can be the same.
+The format returned when fetching a list of entities, or a single entity can be the same.
 
 
 ## $expand
