@@ -3,6 +3,9 @@
 We need a way to link between various objects, internal and external. 
 Since the SensorThings API v1.x does not have special fields for links, the links will have to go in the properties field that each entity type has.
 
+https://github.com/INSIDE-information-systems/SensorThingsAPI/issues/7
+
+
 ## Internal links
 
 To be funktional, internal links need:
@@ -78,13 +81,20 @@ Pre-registered links are announced in the `serverSettings` part of the server ro
     }
 
 By specifying the full path, links do not have to be top-level entries in the properties object, but can be nested deeper.
-For example: `"Thing/properties/links/building@Thing": "The building a room is part of."`
+For example:
+
+    "Thing/properties/links/building": {
+      "targetType": "Thing",
+      "description": "The building a room is part of."
+    }
+
 
 ## Open issues
 
 Some things are not specified yet and are in need of discussion:
 
-- Cardinality many-to-many: 
+- Cardinality many-to-many: linking from one item to many items, using the same name, instead of just to one item.
+- Back-linking: how to generate and annouce links that are two-way instead of just one-way.
 
 
 
