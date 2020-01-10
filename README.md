@@ -21,7 +21,7 @@ It contains more than 130 000 000 observations
 It is further described here : https://github.com/INSIDE-information-systems/SensorThingsAPI/tree/master/Surface_Water_Quality_Bigdatavolume_Benchmarking  with API endPoints
 
 # Sensor Things on Soils
-A SensorThings pattern for Soil profiles and samples has been defined for the French polluted information system.
+A SensorThings pattern for Soil profiles and samples has been defined for the French polluted soils information system.
 More information available here:
 
 - Presentation made at the Toulouse OGC TC (SensorThings SWG session) : https://external.opengeospatial.org/twiki_public/pub/GeoScienceDWG/WebHome/STA_for_Soils.pptx
