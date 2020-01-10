@@ -22,7 +22,10 @@ It is further described here : https://github.com/INSIDE-information-systems/Sen
 
 # Sensor Things on Soils
 A SensorThings pattern for Soil profiles and samples has been defined for the French polluted information system.
-More information available here
+More information available here:
+
+- Presentation made at the Toulouse OGC TC (SensorThings SWG session) : https://external.opengeospatial.org/twiki_public/pub/GeoScienceDWG/WebHome/STA_for_Soils.pptx
+
 
 # Sensor Things on Marine waters 
 Other SensorThings pattern are being worked on with French Marine Agency (IFREMER) for
