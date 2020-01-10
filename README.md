@@ -19,3 +19,14 @@ For this purpose, the French WaterNymph (Naïades) DB has been transformed to th
 It contains more than 130 000 000 observations
 
 It is further described here : https://github.com/INSIDE-information-systems/SensorThingsAPI/tree/master/Surface_Water_Quality_Bigdatavolume_Benchmarking  with API endPoints
+
+# Sensor Things on Soils
+A SensorThings pattern for Soil profiles and samples has been defined for the French polluted information system.
+More information available here
+
+# Sensor Things on Marine waters 
+Other SensorThings pattern are being worked on with French Marine Agency (IFREMER) for
+- Bio (taxa) and chemical observations in Marine waters
+- Buoys acquiring observations at various depth
+
+More information available here
