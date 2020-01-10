@@ -5,19 +5,21 @@ Since many users still like to work with data in spreadsheet applications, a CSV
 
 https://github.com/INSIDE-information-systems/SensorThingsAPI/issues/3
 
+The CSV result format can be requested by setting the request parameter `ResultFormat=CSV`.
+
 
 ## Single Table
 
-ResultFormat=CSV for single-table queries is mostly self-explanatory. 
+For single-table queries, `ResultFormat=CSV` is mostly self-explanatory. 
 The header line contains the direct field names, with each further line having the data of one entity.
 Navigation links are omitted.
 
 Tricky parts are how to handle:
 
-- the "properties" field: This is a complex property with an unknown set of fields.
+- the `properties` and `parameters` field: This is a complex property with an unknown set of fields.
   The only way to deal with this is to include the JSON as is.
   Proper encoding to CSV needs to happen, since JSON contains both double quotes and commas, same as CSV, but this is covered by [RFC 4180](https://tools.ietf.org/html/rfc4180) which defines that double quotes are quoted with a double quote.
-- Datastream/unitOfMeasurement: This is a complex property with three defined fields. 
+- `Datastream/unitOfMeasurement`: This is a complex property with three defined fields. 
   The best way seems to be to split this field into three CSV columns: `unitOfMeasurement/name,unitOfMeasurement/symbol,unitOfMeasurement/definition`
 
 For example:
@@ -29,13 +31,20 @@ For example:
 The format returned when fetching a list of entities, or a single entity can be the same.
 
 
+## $select
+
+The `$select` request parameter allows control over the fields that are returned.
+
+Future work: selecting sub-properties of complex properties such as `Datastream/unitOfMeasurement`, `properties` and `parameters` fields.
+
+
 ## $expand
 
 Single table results are a nice start of course, but the power of the SensorThings API lies in its advanced features.
 One of the great features is $expand, that allows multi-table results.
 
 
-### with single cardinality
+### expand with 'single' cardinality
 
 Expanding relations with a cardinality of 1, such as Observation->Datastream or Datastream->Thing is easy.
 The fields of the expanded EntityType are added to the header, prefixed with the expanded with the navigation link name.
@@ -47,54 +56,25 @@ The fields of the expanded EntityType are added to the header, prefixed with the
 This will duplicate some data, but the data would also be duplicated in the normal result format.
 
 
-### single expand with many cardinality
+### expand with 'many' cardinality
 
-A very common expand is to request Datastreams, with their Observations expanded, or Things, with Datastreams, with Observations.
-In a CSV format, this will duplicate the row for the primary table, for each item in the expanded table.
+Expands of relations with a cardinality of many, such as Thing -> Datastreams, is not allowed, unless the cardinality is reduced to 1 using the `$top=1` parameter.
 
-    id,name,Observations/id,Observations/result,Observations/phenomenonTime
-    1,My Datastream,1,2.9,2005-08-03T23:00:00.000Z
-    1,My Datastream,2,2.8,2005-08-03T23:01:00.000Z
-
-
-### multiple expands with many cardinality
-
-There are three situations where an entity can have two or more expands with a cardinality of many: 
-
-1. `v1.1/Things?$expand=Locations,Datastreams,HistoricalLocations`
-2. `v1.1/Locations?$expand=Things,HistoricalLocations`
-3. `v1.1/MultiDatastreams?$expand=ObservedProperties,Observations`
-
-The Tasking Core specification adds TaskingCapabilities to Things, which adds a fourth expand to Thing entities.
-
-Furthermore, these expands with cardinality many may appear begind other expands:
-
-    v1.1/HistoricalLocations?$expand=Thing($expand=Locations,Datastreams)
-
-This would lead to very complex rules for defining what data should go in each row of the CSV output.
-Therefore expands with a cardinality of many are restricted to a single chain.
-All other expands must be of cardinality one, or have a `$top=1` parameter, turning it into an expand with a cardinality of 1.
-Having a non-allowed set of expands will lead to a HTTP 400 Bad Request error.
-
-Allowed examples:
-
-    v1.1/Things?$expand=Datastreams
-    v1.1/Things?$expand=Datastreams($expand=Observations)
-    v1.1/Things?$expand=Datastreams($expand=ObservedProperty,Observations)
-    v1.1/Things?$expand=Datastreams,Locations($top=1)
-    v1.1/Datastreams?$expand=ObservedProperty,Observations($expand=FeatureOfInterest)
-
-Disallowed examples:
-
-    v1.1/Things?$expand=Datastreams,Locations
-    v1.1/Datastreams?$expand=Observations,Thing($expand=Locations)
+The reason for this is:
+1. Expanding over a relation with a cardinality of many results in multiple nextLinks.
+   One for the main table, and another one for each expand.
+   In the CSV result format, these nextLinks can not be provided to the user.
+   It is thus impossible to download all data this way.
+2. The data resulting from an expand with cardinality many can be received by requesting the other side of the relation, and expanding the relation from the other side.
 
 
 ## MultiDatastreams
 
+MultiDatastreams are not supported by the CSV result format.
+
 MultiDatastreams bring their own set of complications:
 
-- `MultiDatastreams/unitsOfMeasurement` is an array of objects, each with 3 fields
+- `MultiDatastreams/unitOfMeasurements` is an array of objects, each with 3 fields
 - `MultiDatastreams/multiObservationDataTypes` is an array of strings
 - `MultiDatastreams/ObservedProperties` is a navigationList with cardinality many
 - `MultiDatastreams/Observations/result` is an array
@@ -105,7 +85,7 @@ Furthermore, the order of the items in these lists is important.
 Options for dealing with MultiDatastreams are:
 
 - Not allow MultiDatastreams in the CSV resultFormat (avoids the problem)
-- Encoding the unitsOfMeasurement, multiObservationDataTypes, ObservedProperties and Observations/result sets as json arrays in a single CSV line
+- Encoding the unitOfMeasurements, multiObservationDataTypes, ObservedProperties and Observations/result sets as json arrays in a single CSV line
 - Returning a line for each entry in unitsOfMeasurement, multiObservationDataTypes, ObservedProperties and Observations/result
 
 The last option essentially breaks Observations of a MultiDatastream back into normal Observations.
