@@ -1,6 +1,7 @@
 # Linking
 
-We need a way to link between various objects, internal and external. 
+In many use-cases the existing links between entity types that the SensorThings API offers are not sufficient to describe the data.
+A generic way to link between various objects, internal and external is needed.
 Since the SensorThings API v1.x does not have special fields for links, the links will have to go in the properties field that each entity type has.
 
 https://github.com/INSIDE-information-systems/SensorThingsAPI/issues/7
@@ -8,13 +9,13 @@ https://github.com/INSIDE-information-systems/SensorThingsAPI/issues/7
 
 ## Internal links
 
-To be funktional, internal links need:
+To be functional, internal links need:
 - The entity id of the target entity
 - The entity type of the target entity
 - The name of the link
 
 Furthermore, they need to be formatted in a way that the server can easily detect the links.
-This makes it possible for FROST to generate absolute URLs for these links, and allow searching and expanding of the links.
+This makes it possible for the server to generate absolute URLs for these links, and allow searching and expanding of the links.
 
 ### Using special property names
 
@@ -24,20 +25,20 @@ The SensorThings API uses a special @ notation for internal properties:
 - Counts for navigation links are <TargetEntityType>@iot.count
 - Nextlinks are @iot.nextLink
 
-We could introduce something similar. When linking to another Entitiy, add an entry to the properties map like:
+We could introduce something similar. When linking to another Entity, add an entry to the properties map like:
 
-    "<linkName>@<Target Type>.iot.id": <Target Entity Id>
-    "building@Thing.iot.id": 45
-    "sensorType@Sensor.iot.id": 16
-    "aggregateFor@Datastream.iot.id": "123e4567-e89b-12d3-a456-426655440000"
+    "<linkName>.<TargetEntityType>@iot.id": <Target Entity Id>
+    "building.Thing@iot.id": 45
+    "sensorType.Sensor@iot.id": 16
+    "aggregateFor.Datastream@iot.id": "123e4567-e89b-12d3-a456-426655440000"
 
 The server can operate on these, for instance by adding a navigationLink when returning the properties:
 
-    GET v1.0/Things(1)
+    Get V1.0/Things(1)
     {
-        "properties" : {
-            "building@Thing.iot.id": 45,
-            "building@iot.navigationLink": "http://example.org/FROST-Server/v1.0/Things(45)
+        "Properties" : {
+            "building.Thing@Iot.Id": 45,
+            "building.Thing@Iot.Navigationlink": "http://example.org/Frost-Server/V1.0/Things(45)"
         }
     }
 
@@ -46,12 +47,12 @@ The server can support $expand on these entities, including the full target enti
     GET v1.0/Things(1)?$expand=properties/building
     {
         "properties" : {
-            "building@Thing.iot.id": 45,
-            "building": { <expanded Thing> }
+            "building.Thing@iot.id": 45,
+            "building.Thing": { <expanded Thing> }
         }
     }
 
-When updating or creating entities, if there is a property of the type `<linkName>@<Target Type>.iot.id` then the property `<linkName>` and all other properties starting with `<linkName>@` will be removed by the server before storing the properties.
+When updating or creating entities, if there is a property of the type `<linkName>.<TargetEntityType>@iot.id` then the property `<linkName>.<TargetEntityType>` and all other properties starting with `<linkName>.<TargetEntityType>` will be removed by the server before storing the properties.
 
 
 ### Registering & announcing links
