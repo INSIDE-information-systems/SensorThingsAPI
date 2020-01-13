@@ -59,6 +59,7 @@ This will duplicate some data, but the data would also be duplicated in the norm
 ### expand with 'many' cardinality
 
 Expands of relations with a cardinality of many, such as Thing -> Datastreams, is not allowed, unless the cardinality is reduced to 1 using the `$top=1` parameter.
+When requesting more than one item in such an expand, the server will respond with the error: 400 Bad Request.
 
 The reason for this is:
 1. Expanding over a relation with a cardinality of many results in multiple nextLinks.
@@ -70,7 +71,7 @@ The reason for this is:
 
 ## MultiDatastreams
 
-MultiDatastreams are not supported by the CSV result format.
+MultiDatastreams are not supported (yet) by the CSV result format.
 
 MultiDatastreams bring their own set of complications:
 
