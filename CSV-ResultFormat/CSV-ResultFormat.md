@@ -6,6 +6,7 @@ Since many users still like to work with data in spreadsheet applications, a CSV
 https://github.com/INSIDE-information-systems/SensorThingsAPI/issues/3
 
 The CSV result format can be requested by setting the request parameter `ResultFormat=CSV`.
+The resulting CSV document must conform to the [RFC 4180](https://tools.ietf.org/html/rfc4180) specification.
 
 
 ## Single Table
