@@ -1,7 +1,7 @@
 # CSV ResultFormat
 
-In order to make STA data more accessible, it would be valuable to provide a simple CSV result format.
-Since many users still like to work with data in spreadsheet applications, a CSV result format would help convincing people to use STA.
+In order to make data obtained from an OGC SensorThings API service more accessible, this extension provides data in a simple CSV result format.
+Since many users still like to work with data in spreadsheet applications, the availability of a CSV result format will help convincing people to use the SensorThings API.
 
 https://github.com/INSIDE-information-systems/SensorThingsAPI/issues/3
 
@@ -93,5 +93,10 @@ Options for dealing with MultiDatastreams are:
 The last option essentially breaks Observations of a MultiDatastream back into normal Observations.
 
 
+## Conformance Class
+
+The conformance class this extension must register in the SensorThings (v1.1 and up) index document is:
+
+    https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/CSV-ResultFormat/CSV-ResultFormat.md"
 
 
