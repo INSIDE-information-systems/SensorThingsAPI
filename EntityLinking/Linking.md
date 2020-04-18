@@ -44,7 +44,7 @@ The server can operate on these, for instance by adding a navigationLink when re
 
 The server can support $expand on these entities, including the full target entity next to the link:
 
-    GET v1.0/Things(1)?$expand=properties/building
+    GET v1.0/Things(1)?$expand=properties/building.Thing
     {
         "properties" : {
             "building.Thing@iot.id": 45,
