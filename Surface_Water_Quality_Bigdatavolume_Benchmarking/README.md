@@ -14,7 +14,7 @@ A first set of base views were created for features requiring complex join struc
   - The FROST deployment is available at:
 https://brgm.docker01.ilt-dmz.iosb.fraunhofer.de/v1.0/
   - Viewer at:
-https://wg-brgm.docker01.ilt-dmz.iosb.fraunhofer.de/servlet/is/101/
+https://wg-brgm.docker01.ilt-dmz.iosb.fraunhofer.de/servlet/is/196/
 
 # API querying
 ## Nice example for time series:
