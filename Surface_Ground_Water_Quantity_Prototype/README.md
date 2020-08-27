@@ -21,4 +21,4 @@ see requests example in the wiki / voir les exemples de requêtes dans le wiki
 https://github.com/INSIDE-information-systems/SensorThingsAPI/wiki
 
 # Client
-https://wg-brgm.docker01.ilt-dmz.iosb.fraunhofer.de/servlet/is/101/
+https://wg-brgm.docker01.ilt-dmz.iosb.fraunhofer.de/servlet/is/196/
