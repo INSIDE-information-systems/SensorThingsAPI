@@ -32,4 +32,6 @@ Other SensorThings pattern are being worked on with French Marine Agency (IFREME
 - Bio (taxa) and chemical observations in Marine waters
 - Buoys acquiring observations at various depth
 
-More information available here
+# Sensor Things on Earth's critical zone
+
+The French Research Infrastructure OZCAR working on the [Earth's critical zone](https://en.wikipedia.org/wiki/Earth's_critical_zone) is currently finalizing guidelines on how to implement SensorThings API Part 1: Sensing: <https://github.com/theia-ozcar-is/sensorthings-guidelines/>
