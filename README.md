@@ -1,7 +1,7 @@
 # Intro
 
-Work on OGC SensorThing API Part 1: Sensing for Environmental Data. 
-Contribution to the standard and its implementation
+Work on OGC SensorThing API Part 1: Sensing for Environmental Data.
+Contribution to the standard, maturation of a reference implementation (FROST) and help to foster its implementations in various domains.
 
 - First on [V1 - OGC 15-078r6](http://docs.opengeospatial.org/is/15-078r6/15-078r6.html), then on [V 1.1 - OGC 18-088](https://www.ogc.org/standards/sensorthings)
 - Link to the overall standard page (includes Part 2: Tasking Core): <http://www.opengeospatial.org/standards/sensorthings>
