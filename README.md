@@ -67,7 +67,7 @@ See the presentation done at OGC TC in Toulouse November 2019 (SensorThings SWG 
 
 Other SensorThings pattern are being worked on with French Marine Agency (IFREMER) for
 
-- Floats/buoys acquiring observations at various depth (thus Varrying Z observation)
+- Floats/buoys acquiring observations at various depths (thus varying Z observation)
 
   - Generic viewer: <https://sensorthings.geomatys.com/ifremer-webui>
 
