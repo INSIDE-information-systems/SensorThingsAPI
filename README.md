@@ -84,3 +84,4 @@ The French Research Infrastructure OZCAR working on the [Earth's critical zone](
 During the [API4INSPIRE](https://datacoveeu.github.io/API4INSPIRE/) project and important effort was made to have OGC SensorThings API Part 1 officially allowed as an INSPIRE download service for Observations.
 
 - https://inspire.ec.europa.eu/good-practice/ogc-sensorthings-api-inspire-download-service>
+  
