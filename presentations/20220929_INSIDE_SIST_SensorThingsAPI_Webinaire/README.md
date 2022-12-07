@@ -24,7 +24,6 @@ Intervenant·es : Katharina Schleidt (co-chair O&M SWG, experte INSPIRE données
 
 - Katharina Schleidt présente [The long and winding road to O&M](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/2-Historic/OMS-A_long_and_winding_road4.pptx)
 - Cette présentation est également visible en [vidéo](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/2-Historic/Vidéo_Partie_02_The_long_and_winding_road_to_OetM.mp4)
--
 
 ## 3/ Présentation du standard SensorThings et de son API
 
@@ -34,13 +33,14 @@ Les présentations faites le 29/09/2022 par Dr. Hylke van der Schaaf sont visibl
 - [OGC SensorThings API](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/3-ST_API_presentation/SensorThingsApi_Background_EN_v07.pdf)
 - [OGC SensorThings API - Data Model](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/3-ST_API_presentation/SensorThingsApi_DataModel_EN_v06.pdf)
 - [OGC SensorThings API - Rest API](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/3-ST_API_presentation/SensorThingsApi_RestApi_EN_v06.pdf)
-- [Vous pouvez également visualiser ces présentations au format vidéo](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/3-ST_API_presentation/Vidéo_Partie_03_OGC_SensorThings_API.mp4)
+- Vous pouvez également visualiser ces présentations au format vidéo: [1ère partie](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/3-ST_API_presentation/Video_Partie_03_OGC_SensorThings_API_Part01.mp4), [2nde partie](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/3-ST_API_presentation/Video_Partie_03_OGC_SensorThings_API_Part02.mp4) et [3ème partie](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/3-ST_API_presentation/Video_Partie_03_OGC_SensorThings_API_Part03.mp4)
 
 ## 4/ Tutoriel / démonstration de l’utilisation du serveur FROST et de clients
 
 - Entrée et sortie d’un serveur FROST <https://www.iosb.fraunhofer.de/en/projects-and-products/frost-server.html>
 - Clients
-- [Accès à la présentation vidéo](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/5-REX/Vidéo_Partie_08_Tutoriel_serveur_FROST.mp4)
+- Accès à la présentation vidéo : [Partie 1](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/5-REX/Video_Partie_08_Tutoriel_serveur_FROST_Part_01.mp4) et [Partie 2](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/5-REX/Video_Partie_08_Tutoriel_serveur_FROST_Part_02.mp4)
+
 ## 5/ Retours d’expériences sur SensorThings
 
 - IFREMER – basé sur Geomatys : Dorian Ginane, Mickael Treguer ([Présentation](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/5-REX/2909-STS-SIST_IFREMER.pdf) et [vidéo](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/5-REX/Vidéo_Partie_04_Utilisation_standard_SensorThings_IFREMER.mp4))
