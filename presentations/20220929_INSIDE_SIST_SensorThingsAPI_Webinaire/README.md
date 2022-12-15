@@ -60,3 +60,9 @@ Les présentations faites le 29/09/2022 par Dr. Hylke van der Schaaf sont visibl
 Intervenant : Sylvain Grellet (BRGM, pôle INSIDE)
 - Accès au document [Webinaire SensorThings API - Some conclusions](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/6-Conclusion/Webinaire_SensorThings_API_Conclusions_draft1.pdf)
 - [Vidéo sur les derniers échanges de la journée](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/6-Conclusion/Vidéo_Partie_12_Conclusions.mp4)
+
+## Chat Log
+
+Un document partagé accessible en écriture à tous les participants était ouvert pendant la session.
+Il a permis des fils de discussions et des questions complémentaires en français et anglais.
+- Accès au document [Chat Log](https://github.com/INSIDE-information-systems/SensorThingsAPI/blob/master/presentations/20220929_INSIDE_SIST_SensorThingsAPI_Webinaire/ChatLog/Webinaire_SensorThing_chatlog.adoc)
